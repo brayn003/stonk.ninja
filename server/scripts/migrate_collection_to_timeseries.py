@@ -1,13 +1,5 @@
-import services.env
-import pymongo
-import os
 from datetime import datetime
-import pytz
-
-DB_URI = os.getenv('DB_URI')
-DB_NAME = os.getenv('DB_NAME')
-
-client = pymongo.MongoClient(DB_URI)
+from app.services.db import db, client
 
 old_db = client['kite_mock']
 old_collections = [
@@ -27,8 +19,6 @@ old_collections = [
   'ticks_16_feb_p2',
   'ticks_1_mar_p1',
 ]
-
-db = client[DB_NAME]
 
 for old_collection in old_collections:
   old_docs = old_db[old_collection].find()
