@@ -1,7 +1,3 @@
-import React from 'react'
-
 export function UserAuthSuccess() {
-  return (
-    <div>UserAuthSuccess</div>
-  )
+  return <div>UserAuthSuccess</div>;
 }
