@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Rudraprasad Das <brayn003@gmail.com>"]
 packages = [
-    {include = "app", from = "."}
+    { include = "app", from = "." },
 ]
 
 
@@ -22,6 +22,18 @@ pydantic = "^2.6.3"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.3.0"
 pylint = "^3.1.0"
+poethepoet = "^0.25.0"
+
+
+[tool.poe.tasks]
+lint = [
+    { cmd = "ruff check ." },
+    { cmd = "pylint --rcfile=.pylintrc '**/*.py'" },
+]
+format = [
+    { cmd = "ruff format ." },
+    { cmd = "ruff check --fix ." },
+]
 
 
 [build-system]
