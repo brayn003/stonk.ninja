@@ -136,7 +136,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# python lint
+.ruff_cache
+
 
 # dependencies
 node_modules

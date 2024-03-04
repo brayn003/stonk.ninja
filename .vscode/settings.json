@@ -1,3 +1,6 @@
 {
-  "git.ignoreLimitWarning": true
+  "pylint.args": [
+    "--rcfile=${workspaceFolder}/server/.pylintrc"
+  ],
+  "editor.codeActionsOnSave": {},
 }

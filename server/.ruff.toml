@@ -1,0 +1,2 @@
+# extend ruff linter
+lint.extend-select = ["I"]
