@@ -9,5 +9,5 @@ if not DB_NAME:
     raise MissingEnvException("DB_NAME not found in environment variables")
 
 print("Initialized DB")
-client = pymongo.MongoClient(DB_URI)
+client = pymongo.MongoClient(DB_URI, uuidRepresentation="standard")
 db = client[DB_NAME]

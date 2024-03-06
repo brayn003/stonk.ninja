@@ -10,13 +10,14 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.12"
-pymongo = "^4.6.2"
 python-dotenv = "^1.0.1"
 pytz = "^2024.1"
-fastapi = "^0.110.0"
 uvicorn = {extras = ["standard"], version = "^0.27.1"}
 kiteconnect = "^5.0.1"
-pydantic = "^2.6.3"
+itsdangerous = "^2.1.2"
+fastapi = "^0.110.0"
+pymongo = "^4.6.2"
+email-validator = "^2.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -26,6 +27,7 @@ poethepoet = "^0.25.0"
 
 
 [tool.poe.tasks]
+dev = "uvicorn app.main:app --reload"
 lint = [
     { cmd = "ruff check ." },
     { cmd = "pylint --rcfile=.pylintrc '**/*.py'" },
