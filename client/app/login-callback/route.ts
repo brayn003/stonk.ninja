@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   let session;
   let sessionError: string;
   try {
-    const res = await axios.post("/api/auth/login/callback", {
+    const res = await axios.post(`${process.env.SERVER_URL}/api/auth/login/callback`, {
       request_token: requestToken,
     });
     session = res.data.session;
@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
     redirectToRoot({ error: "access_token not found" });
   }
 
-  // @ts-expect-error cookie set type bug in next/headers
-  cookies.set("session", session.sess_id);
+  cookies().set("session", session.sess_id as string);
   return redirect("/app/dashboard");
 }

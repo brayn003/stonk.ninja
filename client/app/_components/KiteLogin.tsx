@@ -13,7 +13,7 @@ interface LoginResponse {
 }
 interface KiteLoginProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-function KiteLogin({ className, ...props }: KiteLoginProps) {
+export default function KiteLogin({ className, ...props }: KiteLoginProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function onClick() {
@@ -42,5 +42,3 @@ function KiteLogin({ className, ...props }: KiteLoginProps) {
     </>
   );
 }
-
-export default KiteLogin;
