@@ -11,15 +11,14 @@ import { cn } from "@/lib/utils";
 interface LoginResponse {
   login_url: string;
 }
+interface KiteLoginProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+function KiteLogin({ className, ...props }: KiteLoginProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function onClick() {
     setIsLoading(true);
-    const res: AxiosResponse<LoginResponse> = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`);
+    const res: AxiosResponse<LoginResponse> = await axios.post("/api/auth/login");
     setIsLoading(false);
     window.open(res.data.login_url, "_self");
   }
@@ -43,3 +42,5 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     </>
   );
 }
+
+export default KiteLogin;

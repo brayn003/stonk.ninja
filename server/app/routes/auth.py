@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 
 from app.services.kite import KiteSession, create_kite_session, kite_login_url
@@ -27,6 +27,7 @@ async def login():
 
 
 @router.post("/login/callback", response_model=LoginCallbackResponse)
-async def login_callback(body: LoginCallbackBody):
+async def login_callback(body: LoginCallbackBody, request: Request):
     session = create_kite_session(body.request_token)
+    request.session["sess_id"] = session["sess_id"]
     return {"session": session}
