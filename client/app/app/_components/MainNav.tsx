@@ -1,31 +1,38 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
 export default function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
+  const pathname = usePathname();
+
+  const menuItems = [
+    {
+      name: "Dashboard",
+      href: "/app/dashboard",
+    },
+    {
+      name: "Capture",
+      href: "/app/capture",
+    },
+  ];
+
   return (
     <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)} {...props}>
-      <Link href="/examples/dashboard" className="text-sm font-medium transition-colors hover:text-primary">
-        Overview
-      </Link>
-      <Link
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Customers
-      </Link>
-      <Link
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Products
-      </Link>
-      <Link
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Settings
-      </Link>
+      {menuItems.map((item) => (
+        <Link
+          key={item.name}
+          href={item.href}
+          className={cn(
+            "text-sm font-medium transition-colors hover:text-primary",
+            pathname === item.href ? "" : "text-muted-foreground",
+          )}
+        >
+          {item.name}
+        </Link>
+      ))}
     </nav>
   );
 }

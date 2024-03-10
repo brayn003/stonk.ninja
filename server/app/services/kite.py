@@ -90,3 +90,27 @@ def create_kite_session(request_token: str) -> KiteSession:
     kite_session = db["sessions"].find_one({"sess_id": sess_id})
     kite_session_cache.set_item(sess_id, kite_session)
     return kite_session
+
+    # def record_ticks(self, ws, ticks, count=0):
+    # processed_ticks = []
+    # for tick in ticks:
+    #     if tick["mode"] != ws.MODE_FULL:
+    #         continue
+    #     count += 1
+    #     exchange_timestamp = tick["exchange_timestamp"]
+    #     instrument_token = tick["instrument_token"]
+    #     tradingsymbol = Instrument(instrument_token).name
+    #     processed_tick = {
+    #         "timestamp": exchange_timestamp,
+    #         "metadata": {
+    #             "instrument_token": instrument_token,
+    #             "tradingsymbol": tradingsymbol,
+    #         },
+    #         "data": tick,
+    #         "received_timestamp": datetime.now(),
+    #     }
+    #     processed_ticks.append(processed_tick)
+    # self.ticks_col.insert_many(processed_ticks)
+    # return processed_ticks, count
+
+    # pylint: disable=unused-argument

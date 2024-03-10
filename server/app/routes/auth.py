@@ -13,11 +13,10 @@ class LoginCallbackBody(BaseModel):
 
 
 class LoginCallbackResponse(BaseModel):
-    session: KiteSession
+    kite_session: KiteSession
 
 
-router = APIRouter()
-router.prefix = "/api/auth"
+router = APIRouter(prefix="/api/auth")
 
 
 @router.post("/login", response_model=LoginResponse)
@@ -28,6 +27,6 @@ async def login():
 
 @router.post("/login/callback", response_model=LoginCallbackResponse)
 async def login_callback(body: LoginCallbackBody, request: Request):
-    session = create_kite_session(body.request_token)
-    request.session["sess_id"] = session["sess_id"]
-    return {"session": session}
+    kite_session = create_kite_session(body.request_token)
+    request.session["kite_session_id"] = kite_session["sess_id"]
+    return {"kite_session": kite_session}

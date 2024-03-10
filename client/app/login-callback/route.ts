@@ -24,14 +24,17 @@ export async function GET(request: NextRequest) {
 
   let session;
   let sessionError: string;
+  let sessionCookie: string;
   try {
     const res = await axios.post(`${process.env.SERVER_URL}/api/auth/login/callback`, {
       request_token: requestToken,
     });
-    session = res.data.session;
+    session = res.data.kite_session;
+    [sessionCookie] = res.headers["set-cookie"] ?? [];
   } catch (error: any) {
     console.error(error);
-    sessionError = error?.message || "Unknown error occuerd";
+    console.log("here2");
+    sessionError = error?.response?.data?.detail || error?.message || "Unknown error occuerd";
     return redirectToRoot({ error: sessionError });
   }
 
@@ -39,6 +42,15 @@ export async function GET(request: NextRequest) {
     redirectToRoot({ error: "access_token not found" });
   }
 
-  cookies().set("session", session.sess_id as string);
-  return redirect("/app/dashboard");
+  if (!sessionCookie) {
+    redirectToRoot({ error: "session cookie not found" });
+  }
+
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/app/dashboard",
+      "Set-Cookie": sessionCookie,
+    },
+  });
 }

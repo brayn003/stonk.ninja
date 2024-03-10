@@ -174,3 +174,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs
+logs/
+
+# supervisord
+supervisord.log
+supervisord.pid
+

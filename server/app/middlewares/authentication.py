@@ -14,13 +14,13 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             status_code=403,
             content={"message": "Unauthorized"},
         )
-        if "sess_id" not in request.session:
+        if "kite_session_id" not in request.session:
             return error_response
 
-        sess_id = request.session["sess_id"]
-        kite_session = get_kite_session(sess_id)
+        kite_session_id = request.session["kite_session_id"]
+        kite_session = get_kite_session(kite_session_id)
         if not kite_session:
             return error_response
 
-        request.session["sess_id"] = kite_session["sess_id"]
+        request.session["kite_session_id"] = kite_session["sess_id"]
         return await call_next(request)
