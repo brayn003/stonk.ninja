@@ -82,5 +82,9 @@ class TicksBroadcast:
         )
         self.channel.start_consuming()
 
+    def unsubscribe(self):
+        self.channel.stop_consuming()
+        self.channel.queue_unbind(exchange="ticks", queue=self.queue)
+
 
 ticks_broadcast = TicksBroadcast()

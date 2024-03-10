@@ -50,11 +50,14 @@ class KiteTickProcessor:
         ws.set_mode(ws.MODE_FULL, all_instruments)
         print("[Connected] SUBSCRIBED: ", all_instruments)
 
+    # pylint: disable-next=unused-argument
     def on_close(self, ws, code, reason):
-        ws.stop()
         print("[Closed] CODE: ", code, "REASON: ", reason)
 
 
 if __name__ == "__main__":
-    ktp = KiteTickProcessor()
-    ktp.kws.connect()
+    try:
+        ktp = KiteTickProcessor()
+        ktp.kws.connect()
+    except KeyboardInterrupt:
+        print("[Stopped]")

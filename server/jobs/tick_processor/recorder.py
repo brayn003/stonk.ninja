@@ -49,5 +49,9 @@ class TicksRecorder:
 
 
 if __name__ == "__main__":
-    tr = TicksRecorder()
-    tr.listen()
+    try:
+        tr = TicksRecorder()
+        tr.listen()
+    except KeyboardInterrupt:
+        ticks_broadcast.unsubscribe()
+        print("[Stopped]")
