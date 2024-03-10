@@ -4,7 +4,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.middlewares.authentication import AuthenticationMiddleware
 from app.middlewares.response_encoder import ResponseEncoderMiddleware
-from app.routes import auth, ticks
+from app.routes import auth, processes, ticks
 from app.services.env import SESSION_SECRET
 
 # BaseModel.model_config["json_encoders"] = {ObjectId: lambda x: str(x)}
@@ -24,6 +24,7 @@ app.add_middleware(ResponseEncoderMiddleware)
 
 app.include_router(auth.router)
 app.include_router(ticks.router)
+app.include_router(processes.router)
 
 
 @app.get("/")
