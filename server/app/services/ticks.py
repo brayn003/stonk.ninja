@@ -4,6 +4,8 @@ from typing import List, Literal
 import pika
 from pydantic import BaseModel
 
+from app.services.env import RABBITMQ_URI
+
 
 class TickDepthLevel(BaseModel):
     quantity: int
@@ -62,9 +64,7 @@ class TickDoc(BaseModel):
 
 class TicksBroadcast:
     def __init__(self):
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host="localhost")
-        )
+        connection = pika.BlockingConnection(pika.URLParameters(RABBITMQ_URI))
         channel = connection.channel()
         channel.exchange_declare(exchange="ticks", exchange_type="fanout")
         result = channel.queue_declare(queue="", exclusive=True)

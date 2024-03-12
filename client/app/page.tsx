@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import ErrorAlert from "./_components/ErrorAlert";
 import KiteLogin from "./_components/KiteLogin";
@@ -23,7 +24,9 @@ export default function PageLogin() {
       </div>
       <div className="relative h-full flex flex-col items-center justify-center lg:p-10">
         <div className="absolute top-8 left-0 right-0 lg:left-8 lg:right-8">
-          <ErrorAlert />
+          <Suspense>
+            <ErrorAlert />
+          </Suspense>
         </div>
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <KiteLogin />

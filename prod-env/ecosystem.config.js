@@ -6,37 +6,21 @@ const common = {
 module.exports = {
     apps: [
         {
-            name: "caddy",
-            script: "caddy run",
-            ...common,
-        },
-        {
             name: "client",
             cwd: "client",
-            script: "pnpm run dev",
-            env: {
-                FORCE_COLOR: "1"
-            },
+            script: "pnpm run start",
             ...common,
         },
         {
             name: "server",
             cwd: "server",
-            script: "poetry run poe dev",
-            env: {
-                PYTHONUNBUFFERED: "1",
-                PATH: `${process.env.PATH}:${__dirname}/.venv/bin`,
-            },
+            script: "poetry run poe start",
             ...common,
         },
         {
             name: "ticks_processor/publisher",
             cwd: "server",
             script: "python jobs/tick_processor/provider.py",
-            env: {
-                PYTHONUNBUFFERED: "1",
-                PATH: `${process.env.PATH}:${__dirname}/.venv/bin`,
-            },
             ...common,
         },
         {
