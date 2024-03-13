@@ -34,5 +34,5 @@ WORKDIR /app/stonk.ninja/server
 RUN poetry install
 WORKDIR /app/stonk.ninja
 
-ENTRYPOINT ["pm2-runtime", "start", "ecosystem.config.js"]
+ENTRYPOINT ["pm2-runtime", "start", "deploy/ecosystem.config.js"]
 
