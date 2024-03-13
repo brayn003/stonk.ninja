@@ -9,7 +9,7 @@ from pydantic import TypeAdapter
 
 from app.constants import WatchedInstrument
 from app.services.db import db
-from app.services.env import KITE_API_KEY
+from app.services.secrets import KITE_API_KEY
 from app.services.ticks import Tick, ticks_broadcast
 
 

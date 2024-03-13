@@ -16,22 +16,6 @@ module.exports = {
             cwd: "server",
             script: "poetry run poe start",
             ...common,
-        },
-        {
-            name: "ticks_processor/publisher",
-            cwd: "server",
-            script: "python jobs/tick_processor/provider.py",
-            ...common,
-        },
-        {
-            name: "ticks_processor/recorder",
-            cwd: "server",
-            script: "python jobs/tick_processor/recorder.py",
-            env: {
-                PYTHONUNBUFFERED: "1",
-                PATH: `${process.env.PATH}:${__dirname}/.venv/bin`,
-            },
-            ...common,
         }
     ],
 };
