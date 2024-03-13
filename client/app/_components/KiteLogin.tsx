@@ -26,7 +26,7 @@ export default function KiteLogin({ className, ...props }: KiteLoginProps) {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome to Ka-ching!</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Welcome to stonk.ninja!</h1>
         <p className="text-sm text-muted-foreground">You&apos;ll need to authenticate with Kite to continue</p>
       </div>
       <div className={cn("grid gap-6", className)} {...props}>

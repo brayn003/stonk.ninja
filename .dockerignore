@@ -185,3 +185,6 @@ supervisord.pid
 # secrets
 secrets.txt
 .secrets
+
+# docker
+volumes/

@@ -7,13 +7,13 @@ module.exports = {
     apps: [
         {
             name: "client",
-            cwd: "client",
+            cwd: "../client",
             script: "pnpm run start",
             ...common,
         },
         {
             name: "server",
-            cwd: "server",
+            cwd: "../server",
             script: "poetry run poe start",
             ...common,
         }

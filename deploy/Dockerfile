@@ -8,10 +8,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1 \
     POETRY_HOME="/opt/poetry"
-
-
-ENV PATH="$POETRY_HOME/bin:/app/ka-ching/server/.venv/bin:$PATH"
-RUN alias python=python3
+ENV PATH="$POETRY_HOME/bin:/app/stonk.ninja/server/.venv/bin:$PATH"
 
 RUN apt-get update
 RUN apt-get install -y curl
@@ -28,21 +25,14 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 
 RUN pm2 logrotate -u root
 
-COPY . /app/ka-ching
-WORKDIR /app/ka-ching/client
+COPY .. /app/stonk.ninja
+WORKDIR /app/stonk.ninja/client
 RUN cp .env.example .env
 RUN pnpm install
 RUN pnpm build
-WORKDIR /app/ka-ching/server
+WORKDIR /app/stonk.ninja/server
 RUN poetry install
-WORKDIR /app/ka-ching
+WORKDIR /app/stonk.ninja
 
-ENTRYPOINT ["pm2-runtime", "start", "prod-env/ecosystem.config.js"]
-
-EXPOSE 4100
-EXPOSE 4200
-
-
-
-
+ENTRYPOINT ["pm2-runtime", "start", "ecosystem.config.js"]
 

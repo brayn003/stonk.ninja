@@ -27,4 +27,4 @@ app.include_router(processes.router)
 
 @app.get("/")
 def root():
-    return {"message": "Welcome to Ka-ching!"}
+    return {"message": "Welcome to stonk.ninja"}
