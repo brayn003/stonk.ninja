@@ -141,13 +141,13 @@ cython_debug/
 
 
 # dependencies
-node_modules
+node_modules/
 .pnp
 .pnp.js
 .yarn/install-state.gz
 
 # testing
-/coverage
+coverage/
 
 # next.js
 .next/
@@ -183,8 +183,8 @@ supervisord.log
 supervisord.pid
 
 # secrets
+secret.txt
 secrets.txt
-.secrets
 
 # docker
 volumes/
