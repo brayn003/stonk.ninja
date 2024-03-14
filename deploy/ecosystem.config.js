@@ -8,7 +8,7 @@ module.exports = {
         {
             name: "client",
             cwd: "client",
-            script: "pnpm run dev",
+            script: "pnpm run start",
             ...common,
         },
         {
