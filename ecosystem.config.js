@@ -12,7 +12,7 @@ module.exports = {
         },
         {
             name: "client",
-            cwd: "client",
+            cwd: "./client",
             script: "pnpm run dev",
             env: {
                 FORCE_COLOR: "1"
@@ -21,7 +21,7 @@ module.exports = {
         },
         {
             name: "server",
-            cwd: "server",
+            cwd: "./server",
             script: "poetry run poe dev",
             env: {
                 PYTHONUNBUFFERED: "1",
