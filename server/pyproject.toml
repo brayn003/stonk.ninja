@@ -29,7 +29,7 @@ poethepoet = "^0.25.0"
 
 [tool.poe.tasks]
 dev = "uvicorn app.main:app --use-colors --reload --reload-exclude 'app_scripts/*'"
-start = "uvicorn app.main:app"
+start = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
 lint = [
     { cmd = "ruff check ." },
     { cmd = "pylint --rcfile=.pylintrc '**/*.py'" },
