@@ -25,3 +25,9 @@ export interface Tick {
     sell: TickDepthLevel[];
   };
 }
+
+export interface TickMessage {
+  messageId: number;
+  vendor: "kite";
+  ticks: Tick[];
+}

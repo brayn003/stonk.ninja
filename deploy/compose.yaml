@@ -1,18 +1,18 @@
 name: "stonk-ninja"
 
 services:
-  # app:
-  #   image: brayn003/stonk.ninja:latest
-  #   depends_on:
-  #     - mongo
-  #     - rabbitmq
-  #   environment:
-  #     - DB_URI=mongodb://mongo:27017
-  #     - DB_NAME=stonk-ninja
-  #     - RABBITMQ_URI=amqp://guest:guest@rabbitmq:5672
-  #     - SECRET_FILE=/run/secrets/secret_file
-  #   secrets:
-  #     - secret_file
+  app:
+    image: brayn003/stonk.ninja:latest
+    depends_on:
+      - mongo
+      - rabbitmq
+    environment:
+      - DB_URI=mongodb://mongo:27017
+      - DB_NAME=stonk-ninja
+      - RABBITMQ_URI=amqp://guest:guest@rabbitmq:5672
+      - SECRET_FILE=/run/secrets/secret_file
+    secrets:
+      - secret_file
 
   app_tick-emitter:
     image: brayn003/stonk.ninja_tick-workers:latest
@@ -25,6 +25,17 @@ services:
       - RABBITMQ_URI=amqp://guest:guest@rabbitmq:5672
       - APP_WORKER=emitter
 
+  app_tick-recorder:
+    image: brayn003/stonk.ninja_tick-workers:latest
+    depends_on:
+      - mongo
+      - rabbitmq
+    environment:
+      - DB_URI=mongodb://mongo:27017
+      - DB_NAME=stonk-ninja
+      - RABBITMQ_URI=amqp://guest:guest@rabbitmq:5672
+      - APP_WORKER=recorder
+
   mongo:
     image: mongo:latest
     volumes:
@@ -34,15 +45,15 @@ services:
   rabbitmq:
     image: rabbitmq:alpine
 
-  # caddy:
-  #   image: caddy:alpine
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
-  #     - ../volumes/caddy/data:/data
-  #     - ../volumes/caddy/config:/config
+  caddy:
+    image: caddy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ../volumes/caddy/data:/data
+      - ../volumes/caddy/config:/config
 
 secrets:
   secret_file:
