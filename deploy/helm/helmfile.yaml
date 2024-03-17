@@ -1,0 +1,34 @@
+environments: 
+  default:
+    values:
+      - env.yaml
+---
+repositories:
+  - name: nginx-stable
+    url: https://helm.nginx.com/stable
+  - name: jetstack
+    url: https://charts.jetstack.io
+
+releases:
+  - name: nginx-ingress
+    namespace: nginx-ingress
+    chart: nginx-stable/nginx-ingress
+    version: ~1.1.3
+
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: ~1.14.4
+    set:
+      - name: installCRDs
+        value: true
+
+  - name: cert-manager-issuer
+    namespace: cert-manager
+    chart: ./charts/cert-manager-issuer
+    needs:
+      - cert-manager
+    values:
+      - ./values/cert-manager-issuer.yaml.gotmpl
+
+  

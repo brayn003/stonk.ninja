@@ -188,3 +188,6 @@ secrets.txt
 
 # docker
 volumes/
+
+# deployment
+deploy/helm/env.yaml
