@@ -1,42 +1,65 @@
-import type { Channel, ConsumeMessage, Replies } from "amqplib";
-import amqplib from "amqplib";
+import type { Consumer, Producer } from "kafkajs";
+import { Kafka } from "kafkajs";
 
-import { ENV_RABBITMQ_URI } from "../services/env";
-import type { Tick } from "../types";
+import type { Tick, TickMessage } from "../types";
 
 export class Broadcast {
-  readonly #exchange: string = "ticks";
-  channel?: Channel;
+  readonly #topic: string = "ticks";
+  kafka?: Kafka;
+  producer?: Producer;
+  consumer?: Consumer;
 
-  async initialize() {
-    const conn = await amqplib.connect(ENV_RABBITMQ_URI);
-    const channel = await conn.createChannel();
-    await channel.assertExchange(this.#exchange, "fanout", { durable: false });
-    this.channel = channel;
+  constructor() {
+    this.kafka = new Kafka({
+      clientId: "client-1",
+      brokers: ["localhost:9092"],
+    });
+  }
+
+  async connectProducer() {
+    if (!this.kafka) throw new Error("Kafka not initialized");
+    const producer = this.kafka.producer();
+    await producer.connect();
+    this.producer = producer;
+  }
+
+  async disconnectProducer() {
+    if (!this.producer) throw new Error("Producer not initialized");
+    await this.producer.disconnect();
   }
 
   async publish(ticks: Tick[]) {
-    if (!this.channel) throw new Error("Channel not initialized");
-    const msg = JSON.stringify({ vendor: "kite", ticks });
-    this.channel.publish(this.#exchange, "", Buffer.from(msg));
+    if (!this.producer) throw new Error("Producer not initialized");
+    const msg = { vendor: "kite", ticks };
+    this.producer.send({
+      topic: this.#topic,
+      messages: [{ value: JSON.stringify(msg) }],
+    });
   }
 
-  async subscribe(cb: (msg: ConsumeMessage | null) => void) {
-    if (!this.channel) throw new Error("Channel not initialized");
-    const q = await this.channel.assertQueue("", { exclusive: true });
-    await this.channel.bindQueue(q.queue, this.#exchange, "");
-    this.channel.consume(q.queue, cb, { noAck: true });
-    return q;
+  async connectConsumer() {
+    if (!this.kafka) throw new Error("Kafka not initialized");
+    const consumer = this.kafka.consumer({ groupId: "tick-recorder" });
+    await consumer.connect();
+    await consumer.subscribe({ topic: this.#topic });
+    this.consumer = consumer;
   }
 
-  async unsubscribe(q: Replies.AssertQueue) {
-    if (!this.channel) throw new Error("Channel not initialized");
-    this.channel.unbindQueue(q.queue, this.#exchange, "");
-    this.channel.deleteQueue(q.queue);
+  async disconnectConsumer() {
+    if (!this.consumer) throw new Error("Consumer not initialized");
+    await this.consumer.disconnect();
   }
 
-  async close() {
-    if (!this.channel) throw new Error("Channel not initialized");
-    await this.channel.close();
+  async subscribe(cb: (msg: TickMessage) => void) {
+    return await this.consumer?.run({
+      eachMessage: async ({ message }) => {
+        if (!message.value) {
+          console.log("No message value");
+          return;
+        }
+        const msg: TickMessage = JSON.parse(message.value.toString());
+        cb(msg);
+      },
+    });
   }
 }

@@ -1,4 +1,4 @@
-dev.stonk.ninja {
-	reverse_proxy localhost:4100
-	reverse_proxy /api/* localhost:4200
+stonkninja.localhost {
+	reverse_proxy 127.0.0.1:3000
+	reverse_proxy /api/* 127.0.0.1:8000
 }

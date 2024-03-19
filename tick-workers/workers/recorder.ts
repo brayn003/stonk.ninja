@@ -1,5 +1,3 @@
-import type { ConsumeMessage } from "amqplib";
-
 import { Broadcast } from "../services/broadcast";
 import { db } from "../services/db";
 import { WatchedInstruments } from "../services/instruments";
@@ -13,12 +11,16 @@ class KiteTickerRecorder {
     const processedTicks = [];
     for (const tick of ticks) {
       const pTick = {
-        timestamp: tick.exchange_timestamp,
+        timestamp: new Date(tick.exchange_timestamp),
         metadata: {
           instrument_token: tick.instrument_token,
           tradingsymbol: WatchedInstruments[tick.instrument_token],
         },
-        data: tick,
+        data: {
+          ...tick,
+          exchange_timestamp: new Date(tick.exchange_timestamp),
+          last_trade_time: new Date(tick.last_trade_time),
+        },
         received_at: new Date(),
       };
       processedTicks.push(pTick);
@@ -30,19 +32,17 @@ class KiteTickerRecorder {
     await db.collection("ticks").insertMany(processedTicks);
   }
 
-  async #subscribeCb(msg: ConsumeMessage | null) {
-    if (msg?.content) {
-      const { ticks }: TickMessage = JSON.parse(msg.content.toString());
-      this.batchId += 1;
-      console.log(`[Received] BATCH: ${this.batchId} COUNT: ${ticks.length}`);
-      await this.#record(ticks);
-      console.log(`[Recorded] BATCH: ${this.batchId} COUNT: ${ticks.length} TOTAL: ${this.count}`);
-    }
+  async #subscribeCb(msg: TickMessage) {
+    const { ticks } = msg;
+    this.batchId += 1;
+    console.log(`[Received] BATCH: ${this.batchId} COUNT: ${ticks.length}`);
+    await this.#record(ticks);
+    console.log(`[Recorded] BATCH: ${this.batchId} COUNT: ${ticks.length} TOTAL: ${this.count}`);
   }
 
   async listen() {
     const broadcast = new Broadcast();
-    await broadcast.initialize();
+    await broadcast.connectConsumer();
     await broadcast.subscribe(this.#subscribeCb.bind(this));
     console.log("[Listening]");
   }

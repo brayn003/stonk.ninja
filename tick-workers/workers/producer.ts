@@ -36,7 +36,7 @@ class KiteTickerEmitter {
     this.ticker.on("disconnect", this.#onClose.bind(this));
 
     const broadcast = new Broadcast();
-    await broadcast.initialize();
+    await broadcast.connectProducer();
     this.broadcast = broadcast;
   }
 
@@ -64,7 +64,7 @@ class KiteTickerEmitter {
   async #onClose(ws: { code: number; reason: string }) {
     if (!this.ticker) throw new Error("Ticker not initialized");
     this.ticker.disconnect();
-    console.log(`[Closed] CODE: ${ws.code} REASON: ${ws.reason ?? "Unknown"}`);
+    console.log(`[Closed] CODE: ${ws?.code} REASON: ${ws?.reason}`);
   }
 
   start() {

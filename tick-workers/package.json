@@ -25,6 +25,7 @@
   "dependencies": {
     "amqplib": "^0.10.3",
     "dotenv": "^16.4.5",
+    "kafkajs": "^2.2.4",
     "kiteconnect": "^4.1.0",
     "mongodb": "^6.5.0"
   }

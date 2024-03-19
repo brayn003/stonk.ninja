@@ -190,4 +190,5 @@ secrets.txt
 volumes/
 
 # deployment
-deploy/helm/env.yaml
+deploy/helm/
+

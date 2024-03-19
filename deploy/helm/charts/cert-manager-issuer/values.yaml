@@ -1,5 +1,0 @@
-clusterIssuer:
-  name: letsencrypt
-  namespace: cert-manager
-  acmeServer: https://acme-v02.api.letsencrypt.org/directory
-  acmeEmail: 
