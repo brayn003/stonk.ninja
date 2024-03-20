@@ -45,7 +45,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: [".eslintrc.js", "next.config.mjs", "postcss.config.js"],
+      files: [".eslintrc.js", "next.config.mjs", "postcss.config.js", "tailwind.config.js"],
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
       parserOptions: {
         sourceType: "module",

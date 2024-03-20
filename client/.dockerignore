@@ -1,0 +1,30 @@
+# misc
+.DS_Store
+*.pem
+
+# environments
+.env
+.env.*
+!.env.example
+
+# dependencies
+node_modules/
+
+# next.js
+.next/
+dist/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# logs
+logs/

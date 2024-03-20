@@ -4,7 +4,7 @@ export function middleware(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
   console.log("middleware in", request.url);
 
-  if (!session && request.nextUrl.pathname.startsWith("/app")) {
+  if (!session && request.nextUrl.pathname.startsWith("/private")) {
     return Response.redirect(new URL("/", request.url));
   }
 

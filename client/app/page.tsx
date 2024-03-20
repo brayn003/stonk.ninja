@@ -29,7 +29,9 @@ export default function PageLogin() {
           </Suspense>
         </div>
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <KiteLogin />
+          <Suspense>
+            <KiteLogin />
+          </Suspense>
           {/* <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
