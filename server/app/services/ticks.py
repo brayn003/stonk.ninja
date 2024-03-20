@@ -1,10 +1,7 @@
 from datetime import datetime
 from typing import List, Literal
 
-import pika
 from pydantic import BaseModel
-
-from app.services.env import RABBITMQ_URI
 
 
 class TickDepthLevel(BaseModel):
@@ -60,31 +57,3 @@ class TickDoc(BaseModel):
     metadata: TickDocMetadata
     data: Tick
     received_at: datetime
-
-
-class TicksBroadcast:
-    def __init__(self):
-        connection = pika.BlockingConnection(pika.URLParameters(RABBITMQ_URI))
-        channel = connection.channel()
-        channel.exchange_declare(exchange="ticks", exchange_type="fanout")
-        result = channel.queue_declare(queue="", exclusive=True)
-        self.queue = result.method.queue
-        self.channel = channel
-
-    def publish(self, ticks: List[Tick]):
-        message: str = TicksMessage(vendor="kite", ticks=ticks).model_dump_json()
-        self.channel.basic_publish(exchange="ticks", routing_key="", body=message)
-
-    def subscribe(self, callback):
-        self.channel.queue_bind(exchange="ticks", queue=self.queue)
-        self.channel.basic_consume(
-            queue=self.queue, on_message_callback=callback, auto_ack=True
-        )
-        self.channel.start_consuming()
-
-    def unsubscribe(self):
-        self.channel.stop_consuming()
-        self.channel.queue_unbind(exchange="ticks", queue=self.queue)
-
-
-ticks_broadcast = TicksBroadcast()

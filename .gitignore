@@ -191,4 +191,5 @@ volumes/
 
 # deployment
 deploy/helm/
+deploy/helm-vendor/
 

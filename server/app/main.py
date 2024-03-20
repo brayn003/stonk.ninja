@@ -3,10 +3,9 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.middlewares.authentication import AuthenticationMiddleware
-from app.routes import auth, processes, ticks
-from app.services.secrets import SESSION_SECRET
+from app.routes import auth
+from app.services.env import SESSION_SECRET
 
-# BaseModel.model_config["json_encoders"] = {ObjectId: lambda x: str(x)}
 app = FastAPI()
 
 app.add_middleware(
@@ -21,8 +20,6 @@ app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
 
 
 app.include_router(auth.router)
-app.include_router(ticks.router)
-app.include_router(processes.router)
 
 
 @app.get("/")
