@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   let sessionError: string;
   let sessionCookie: string;
   try {
-    const res = await axios.post(`${process.env.SERVER_URL}/api/auth/login/callback`, {
+    const res = await axios.post(`${process.env.SERVER_PRIVATE_URL}/api/auth/login/callback`, {
       request_token: requestToken,
     });
     session = res.data.kite_session;
