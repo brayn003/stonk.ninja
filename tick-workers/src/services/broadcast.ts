@@ -2,6 +2,7 @@ import type { Consumer, Producer } from "kafkajs";
 import { Kafka } from "kafkajs";
 
 import type { Tick, TickMessage } from "../types";
+import { ENV_KAFKA_URI } from "./env";
 
 export class Broadcast {
   readonly #topic: string = "ticks";
@@ -12,7 +13,7 @@ export class Broadcast {
   constructor() {
     this.kafka = new Kafka({
       clientId: "client-1",
-      brokers: ["localhost:9092"],
+      brokers: [ENV_KAFKA_URI],
     });
   }
 

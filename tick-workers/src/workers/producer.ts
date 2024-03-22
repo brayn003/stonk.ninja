@@ -14,7 +14,7 @@ interface SessionDoc {
   };
 }
 
-class KiteTickerEmitter {
+class KiteTickerProducer {
   ticker?: KiteTicker;
   broadcast?: Broadcast;
   batchId: number = 0;
@@ -73,10 +73,8 @@ class KiteTickerEmitter {
   }
 }
 
-async function main() {
-  const emitter = new KiteTickerEmitter();
-  await emitter.initialize();
-  emitter.start();
+export async function runProducer() {
+  const producer = new KiteTickerProducer();
+  await producer.initialize();
+  producer.start();
 }
-
-main();

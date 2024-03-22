@@ -48,9 +48,7 @@ class KiteTickerRecorder {
   }
 }
 
-async function main() {
+export async function runRecorder() {
   const recorder = new KiteTickerRecorder();
   await recorder.listen();
 }
-
-main();

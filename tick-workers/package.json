@@ -2,9 +2,12 @@
   "name": "@stonk.ninja/tick-workers",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node --project tsconfig.json",
-    "build": "tsc --project tsconfig.json --outDir dist"
+    "dev": "ts-node --project tsconfig.json src/index.ts",
+    "build": "tsc --project tsconfig.json --outDir dist",
+    "start": "node dist/index.js",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.mjs,.cjs src/"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.5",
