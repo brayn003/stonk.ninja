@@ -3,9 +3,9 @@ name: Build and push server
 on:
   push:
       branches: 
-        - 'main'
+        - "main"
       paths:
-        - 'server/**'
+        - "server/**"
 
 defaults:
   run:
@@ -29,5 +29,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: server/Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-server:latest

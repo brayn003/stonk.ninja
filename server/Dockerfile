@@ -5,7 +5,6 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
 WORKDIR /app
-# ENV PATH="$POETRY_HOME/bin:/app/stonk.ninja/server/.venv/bin:$PATH"
 
 FROM base AS deps
 ENV POETRY_HOME="/opt/poetry"
