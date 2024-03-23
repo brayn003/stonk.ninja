@@ -1,7 +1,11 @@
 name: Build and push server
 
 on:
-  workflow_call:
+  push:
+      branches: 
+        - 'main'
+      paths:
+        - 'server/**'
 
 defaults:
   run:
