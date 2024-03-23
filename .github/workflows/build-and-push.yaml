@@ -30,7 +30,7 @@ jobs:
     name: build-server
     needs: path-filter
     if: needs.path-filter.outputs.server == 'true'
-    uses: ./.github/workflows/build-and-push-server.yml
+    uses: ./.github/workflows/build-and-push-server.yaml
     secrets: inherit
     with:
       pr: ${{ github.event.pull_request.number }}
