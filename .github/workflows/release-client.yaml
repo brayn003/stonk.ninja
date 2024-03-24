@@ -7,6 +7,24 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - name: Get release manifest
+        id: release-manifest
+        run: |
+          REPO=${{ github.repository }}
+          RELEASE_MANIFEST=$(wget https://raw.githubusercontent.com/$REPO/main/.release-please-manifest.json -q -O -)
+          VERSION=$(jq -r '.client' <<< "${RELEASE_MANIFEST}")
+          echo "version=${VERSION}" >> ">> $GITHUB_OUTPUT"
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-tick-workers:latest
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}},value=${{ steps.release-manifest.outputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.release-manifest.outputs.version }}
+            type=semver,pattern={{major}},value=${{ steps.release-manifest.outputs.version }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -23,4 +41,5 @@ jobs:
           context: "{{defaultContext}}:client"
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-client:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
