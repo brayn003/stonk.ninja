@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-server-v0.0.3...stonk.ninja-server-v0.0.4) (2024-03-24)
+
+
+### Bug Fixes
+
+* testing release workflow ([bb80b1b](https://github.com/brayn003/stonk.ninja/commit/bb80b1bdbbc5db70d296815eba7ce44e14935bd1))
+
 ## [0.0.3](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-server-v0.0.2...stonk.ninja-server-v0.0.3) (2024-03-24)
 
 
