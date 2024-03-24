@@ -42,3 +42,4 @@ To run `stonk.ninja server` locally, run the following command:
 pnpm run dev
 ```
 
+# test

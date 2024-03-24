@@ -45,3 +45,4 @@ To run `stonk.ninja server` locally, run the following command:
 ```bash
 poetry run poe dev
 ```
+# test
