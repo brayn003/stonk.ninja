@@ -13,7 +13,7 @@ jobs:
           REPO=${{ github.repository }}
           RELEASE_MANIFEST=$(wget https://raw.githubusercontent.com/$REPO/main/.release-please-manifest.json -q -O -)
           VERSION=$(jq -r '.client' <<< "${RELEASE_MANIFEST}")
-          echo "version=${VERSION}" >> ">> $GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
