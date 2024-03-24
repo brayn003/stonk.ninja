@@ -14,7 +14,7 @@
 
 ### Prerequisites
 1. Nodejs >= 18.19.0: You can download and install Nodejs from the official website [here](https://nodejs.org/en/download).
-2. pnpm package manager: Pnpm is used to manage dependencies in the project. You can install it by following the instructions in the official documentation [here](https://pnpm.io/installation).
+2. Pnpm >= 8.15.5: Pnpm is used to manage dependencies in the project. You can install it by following the instructions in the official documentation [here](https://pnpm.io/installation).
 
 ### Installation
 1. Clone the repository

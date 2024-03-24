@@ -17,7 +17,7 @@ For data storage, it utilizes MongoDB with its time-series data handling capabil
 
 ### Prerequisites
 1. Python >= 3.12: You can download and install Python from the official website [here](https://www.python.org/downloads/).
-2. Poetry package manager: Poetry is used to manage dependencies in the project. You can install Poetry by following the instructions in the official documentation [here](https://python-poetry.org/docs/#installation).
+2. Poetry >= 1.2.0: Poetry is used to manage dependencies in the project. You can install Poetry by following the instructions in the official documentation [here](https://python-poetry.org/docs/#installation).
 3. `api_key` and `api_secret` provided by [Kite Connect](https://kite.trade/).
 
 ### Installation
