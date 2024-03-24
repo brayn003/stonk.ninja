@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.2](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-server-v0.0.1...stonk.ninja-server-v0.0.2) (2024-03-24)
+
+
+### Bug Fixes
+
+* adding readme to client and fixing server readme ([86dff94](https://github.com/brayn003/stonk.ninja/commit/86dff940f1d921cc55eb3e9f817dbdf604de3b4e))
+
+
+### Miscellaneous Chores
+
+* release 0.0.2 ([192d306](https://github.com/brayn003/stonk.ninja/commit/192d306b714948501d44a9923d441cb586bb0e67))
+
 ## 0.0.1 (2024-03-24)
 
 
