@@ -1,14 +1,10 @@
-name: Build and push client
+name: Release tick-workers
 
 on:
-  push:
-      branches: 
-        - "main"
-      paths:
-        - "client/**"
+  workflow_call:
 
 jobs:
-  docker-build-and-push:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -24,7 +20,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:client"
+          context: "{{defaultContext}}:tick-workers"
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-client:latest
+          tags: ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-tick-workers:latest

@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+
+      - run: echo "Release created ${{ steps.release.outputs.release_created }}"
+        if: ${{ steps.release.outputs.release_created }}
+
+      - uses: ./.github/workflows/release-server.yaml
+        if: ${{ steps.release.outputs.server--release_created }}
+
+      - uses: ./.github/workflows/release-client.yaml
+        if: ${{ steps.release.outputs.client--release_created }}
+
+      - uses: ./.github/workflows/release-tick-workers.yaml
+        if: ${{ steps.release.outputs.tick-workers--release_created }}

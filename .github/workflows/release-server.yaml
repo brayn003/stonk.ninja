@@ -1,14 +1,10 @@
-name: Build and push server
+name: Release server
 
 on:
-  push:
-      branches: 
-        - "main"
-      paths:
-        - "server/**"
+  workflow_call:
 
 jobs:
-  docker-build-and-push:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
