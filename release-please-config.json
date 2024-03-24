@@ -1,0 +1,15 @@
+{
+    "release-type": "simple",
+
+    "packages": {
+      "server": {
+        "release-type": "python"
+      },
+      "client": {
+        "release-type": "node"
+      },
+      "tick-workers": {
+        "release-type": "node"
+      }
+    }
+  }
