@@ -18,29 +18,19 @@ jobs:
       tick-workers--release_created: ${{ steps.release.outputs.tick-workers--release_created }}
     steps:
       - uses: google-github-actions/release-please-action@v4
-        id: Release
+        id: release
   
   release-server:
-    runs-on: ubuntu-latest
     needs: release-please
-    steps:
-      - name: Release server
-        uses: brayn003/stonk.ninja/.github/workflows/release-server.yaml@main
-        if: ${{ needs.release-please.outputs.server--release_created }}
+    if: ${{ needs.release-please.outputs.server--release_created }}
+    uses: brayn003/stonk.ninja/.github/workflows/release-server.yaml@main
 
   release-client:
-    runs-on: ubuntu-latest
     needs: release-please
-    steps:
-      - name: Release client
-        uses: brayn003/stonk.ninja/.github/workflows/release-client.yaml@main
-        if: ${{ needs.release-please.outputs.client--release_created }}
+    if: ${{ needs.release-please.outputs.client--release_created }}
+    uses: brayn003/stonk.ninja/.github/workflows/release-client.yaml@main
 
   release-tick-workers:
-    runs-on: ubuntu-latest
     needs: release-please
-    steps:
-      - name: Release tick-workers
-        uses: brayn003/stonk.ninja/.github/workflows/release-tick-workers.yaml@main
-        if: ${{ needs.release-please.outputs.tick-workers--release_created }}
-
+    if: ${{ needs.release-please.outputs.tick-workers--release_created }}
+    uses: brayn003/stonk.ninja/.github/workflows/release-tick-workers.yaml@main
