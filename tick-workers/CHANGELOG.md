@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.3](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-tick-workers-v0.0.2...stonk.ninja-tick-workers-v0.0.3) (2024-03-24)
+
+
+### Bug Fixes
+
+* adding badges to readme ([b3b7487](https://github.com/brayn003/stonk.ninja/commit/b3b7487230d39b9d91523c948471cf4f4dfd85e5))
+* fixing actions with readme ([cb5b939](https://github.com/brayn003/stonk.ninja/commit/cb5b93944b8a32783462d1bb8090e7d1a91b3d5a))
+
 ## [0.0.2](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-tick-workers-v0.0.1...stonk.ninja-tick-workers-v0.0.2) (2024-03-24)
 
 
