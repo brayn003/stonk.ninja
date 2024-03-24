@@ -2,7 +2,6 @@ name: Release server
 
 on:
   workflow_call:
-    secrets: inherit
 
 jobs:
   build-and-push:

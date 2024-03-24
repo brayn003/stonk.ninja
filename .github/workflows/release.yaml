@@ -24,13 +24,16 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.server--release_created }}
     uses: brayn003/stonk.ninja/.github/workflows/release-server.yaml@main
+    secrets: inherit
 
   release-client:
     needs: release-please
     if: ${{ needs.release-please.outputs.client--release_created }}
     uses: brayn003/stonk.ninja/.github/workflows/release-client.yaml@main
+    secrets: inherit
 
   release-tick-workers:
     needs: release-please
     if: ${{ needs.release-please.outputs.tick-workers--release_created }}
     uses: brayn003/stonk.ninja/.github/workflows/release-tick-workers.yaml@main
+    secrets: inherit
