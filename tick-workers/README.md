@@ -45,5 +45,3 @@ To run `stonk.ninja tick-worker` locally, run the following command:
 pnpm run dev [worker-type]
 ```
 `worker-type` can either be a `producer` or a `recorder`.
-
-# test
