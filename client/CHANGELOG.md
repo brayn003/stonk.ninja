@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-client-v0.0.2...stonk.ninja-client-v0.0.3) (2024-03-24)
+
+
+### Bug Fixes
+
+* adding badges to readme ([b3b7487](https://github.com/brayn003/stonk.ninja/commit/b3b7487230d39b9d91523c948471cf4f4dfd85e5))
+
 ## [0.0.2](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-client-v0.0.1...stonk.ninja-client-v0.0.2) (2024-03-24)
 
 
