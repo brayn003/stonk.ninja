@@ -193,3 +193,7 @@ deploy/helm/
 deploy/helm-vendor/
 pulumi/
 
+# ide
+.vscode
+.idea
+

@@ -1,6 +1,0 @@
-{
-  "pylint.args": [
-    "--rcfile=${workspaceFolder}/server/.pylintrc"
-  ],
-  "editor.codeActionsOnSave": {},
-}
