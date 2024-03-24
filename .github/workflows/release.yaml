@@ -20,13 +20,13 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Release server
-        uses: brayn003/stonk.ninja/.github/workflows/release-server.yaml
+        uses: brayn003/stonk.ninja/.github/workflows/release-server.yaml@main
         if: ${{ steps.release.outputs.server--release_created }}
 
       - name: Release client
-        uses: brayn003/stonk.ninja/.github/workflows/release-client.yaml
+        uses: brayn003/stonk.ninja/.github/workflows/release-client.yaml@main
         if: ${{ steps.release.outputs.client--release_created }}
 
       - name: Release tick-workers
-        uses: brayn003/stonk.ninja/.github/workflows/release-tick-workers.yaml
+        uses: brayn003/stonk.ninja/.github/workflows/release-tick-workers.yaml@main
         if: ${{ steps.release.outputs.tick-workers--release_created }}
