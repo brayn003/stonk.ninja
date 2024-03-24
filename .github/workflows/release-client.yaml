@@ -2,6 +2,7 @@ name: Release client
 
 on:
   workflow_call:
+    secrets: inherit
 
 jobs:
   build-and-push:
