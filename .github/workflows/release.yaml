@@ -19,11 +19,14 @@ jobs:
       - run: echo "Release created ${{ steps.release.outputs.release_created }}"
         if: ${{ steps.release.outputs.release_created }}
 
-      - uses: ./.github/workflows/release-server.yaml
+      - name: Release server
+        uses: ./.github/workflows/release-server.yaml
         if: ${{ steps.release.outputs.server--release_created }}
 
-      - uses: ./.github/workflows/release-client.yaml
+      - name: Release client
+        uses: ./.github/workflows/release-client.yaml
         if: ${{ steps.release.outputs.client--release_created }}
 
-      - uses: ./.github/workflows/release-tick-workers.yaml
+      - name: Release tick-workers
+        uses: ./.github/workflows/release-tick-workers.yaml
         if: ${{ steps.release.outputs.tick-workers--release_created }}
