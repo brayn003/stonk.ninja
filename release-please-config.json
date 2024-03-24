@@ -3,12 +3,15 @@
 
     "packages": {
       "server": {
+        "component-name": "stonk.ninja-server",
         "release-type": "python"
       },
       "client": {
+        "component-name": "stonk.ninja-client",
         "release-type": "node"
       },
       "tick-workers": {
+        "component-name": "stonk.ninja-tick-workers",
         "release-type": "node"
       }
     }
