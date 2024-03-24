@@ -1,4 +1,6 @@
 # stonk.ninja tick-workers
+![Release tick-workers](https://github.com/brayn003/stonk.ninja/actions/workflows/release-tick-workers.yaml/badge.svg)
+
 `stonk.ninja tick-workers` are a collection of programs that manage tick-data in realtime.
 
 ## Technology 💻
@@ -44,3 +46,4 @@ pnpm run dev [worker-type]
 ```
 `worker-type` can either be a `producer` or a `recorder`.
 
+### test
