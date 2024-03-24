@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# stonk.ninja client
+`stonk.ninja client` is a robust and dynamic visualization tool for market data analysis. It is built on top of `stonk.ninja server`, providing a user-friendly interface to interact with and understand complex market data. It also offers real-time visualizations for market activity, allowing users to monitor market trends and make informed decisions. 
 
-## Getting Started
+## Features ✨
+- **Real-time visualizations**: The client provides real-time visualizations (candlesticks and related charts) for market activity, enabling users to track market trends and fluctuations as they happen.
+- **Simulation visualizations**: Users can visualize simulated trading strategies, providing a risk-free environment to test and refine trading strategies before implementing them in the real market.
+- **Watchlist management**: Users can create and manage watchlists, allowing them to monitor specific securities, derivatives, and cryptocurrencies of interest.
 
-First, run the development server:
+## Technology 💻
 
+`stonk.ninja client` is written in TypeScript, a statically typed superset of JavaScript. It leverages the power of `Next.js` and `React` frameworks for fast and efficient web development.
+
+## Getting Started 🚀
+
+### Prerequisites
+1. Nodejs >= 18.19.0: You can download and install Nodejs from the official website [here](https://nodejs.org/en/download).
+2. pnpm package manager: Pnpm is used to manage dependencies in the project. You can install it by following the instructions in the official documentation [here](https://pnpm.io/installation).
+
+### Installation
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/brayn003/stonk.ninja.git
+```
+2. Navigate to the project directory
+```bash
+cd client
+```
+3. Install dependencies with pnpm
+```bash
+pnpm install
+```
+4. Create the `.env` file. Please replace the values depending on your project environment
+```bash
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Run Locally
+To run `stonk.ninja server` locally, run the following command:
+```bash
+pnpm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
