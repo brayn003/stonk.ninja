@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.10](https://github.com/brayn003/stonk.ninja/compare/v0.1.9...v0.1.10) (2024-03-25)
+
+
+### Bug Fixes
+
+* minor config changes ([72612ac](https://github.com/brayn003/stonk.ninja/commit/72612ac57046b7a6a79744ced72dc4712a470c16))
+
+
+### Miscellaneous Chores
+
+* release 0.1.10 ([4cf3711](https://github.com/brayn003/stonk.ninja/commit/4cf3711a45133cd3da675dfa7a41f9f5f0262e1d))
+
 ## [0.1.9](https://github.com/brayn003/stonk.ninja/compare/v0.1.8...v0.1.9) (2024-03-25)
 
 
