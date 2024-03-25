@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.11](https://github.com/brayn003/stonk.ninja/compare/v0.1.10...v0.1.11) (2024-03-25)
+
+
+### Bug Fixes
+
+* adding releases for all components ([aa1f8d5](https://github.com/brayn003/stonk.ninja/commit/aa1f8d5398ad33ef1fb893625014c7b5b3cd90c4))
+* change release pr message ([019e3cb](https://github.com/brayn003/stonk.ninja/commit/019e3cb7f7a2a40aefc3933020e8192d791a0fef))
+* removing unecessary logging ([60514c2](https://github.com/brayn003/stonk.ninja/commit/60514c2855cf9d9bdf43b8a7d03f24b67e7215b1))
+
+
+### Miscellaneous Chores
+
+* release 0.1.11 ([d28ea17](https://github.com/brayn003/stonk.ninja/commit/d28ea17f228168a4aef48176fc9a81e80c965d9b))
+
 ## [0.1.10](https://github.com/brayn003/stonk.ninja/compare/v0.1.9...v0.1.10) (2024-03-25)
 
 
