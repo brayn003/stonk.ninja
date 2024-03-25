@@ -1,7 +1,8 @@
 {
     "release-type": "simple",
     "group-pull-request-title-pattern": "chore: release v${version}" ,
-    "pull-request-header": "## :tada:  stonk.ninja changelog",
+    "pull-request-header": "## :tada: stonk.ninja changelog",
+    "tag-separator": "/",
     "packages": {
 
       ".": {
@@ -10,19 +11,16 @@
         "include-component-in-tag": false
       },
       "server": {
-        "package-name": "stonk.ninja-server",
-        "release-type": "python",
-        "skip-github-release": true
+        "package-name": "server",
+        "release-type": "python"
       },
       "client": {
-        "package-name": "stonk.ninja-client",
-        "release-type": "node",
-        "skip-github-release": true
+        "package-name": "client",
+        "release-type": "node"
       },
       "tick-workers": {
-        "package-name": "stonk.ninja-tick-workers",
-        "release-type": "node",
-        "skip-github-release": true
+        "package-name": "tick-workers",
+        "release-type": "node"
       }
     }
   }
