@@ -1,4 +1,4 @@
-name: Release tick-workers
+name: Push tick-workers
 
 on:
   workflow_call:
