@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-tick-workers-v0.1.3...stonk.ninja-tick-workers-v0.1.4) (2024-03-25)
+
+
+### Miscellaneous Chores
+
+* release 0.1.4 ([96dda72](https://github.com/brayn003/stonk.ninja/commit/96dda7296dce348b54f6ce2141d4065841e6ef92))
+
 ## [0.1.3](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-tick-workers-v0.1.2...stonk.ninja-tick-workers-v0.1.3) (2024-03-25)
 
 
