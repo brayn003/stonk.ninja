@@ -11,11 +11,11 @@ export default function MainNav({ className, ...props }: React.HTMLAttributes<HT
   const menuItems = [
     {
       name: "Dashboard",
-      href: "/app/dashboard",
+      href: "/private/dashboard",
     },
     {
       name: "Capture",
-      href: "/app/capture",
+      href: "/private/capture",
     },
   ];
 
