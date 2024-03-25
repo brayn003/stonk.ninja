@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-client-v0.1.5...stonk.ninja-client-v0.1.6) (2024-03-25)
+
+
+### Miscellaneous Chores
+
+* release 0.1.6 ([458f6a1](https://github.com/brayn003/stonk.ninja/commit/458f6a13d4a99d513a8d9aae1c374e69cb0bb675))
+
 ## [0.1.5](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-client-v0.1.4...stonk.ninja-client-v0.1.5) (2024-03-25)
 
 
