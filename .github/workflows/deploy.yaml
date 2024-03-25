@@ -1,9 +1,9 @@
-name: Pulumi
+name: Deploy
 on:
   workflow_call:
 
 jobs:
-  update:
+  deploy-via-pulumi:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
