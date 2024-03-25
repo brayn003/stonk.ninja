@@ -1,5 +1,47 @@
 # Changelog
 
+## [0.1.11](https://github.com/brayn003/stonk.ninja/compare/tick-workers/v0.1.10...tick-workers/v0.1.11) (2024-03-25)
+
+
+### Features
+
+* adding service for tick worker ([f49dc43](https://github.com/brayn003/stonk.ninja/commit/f49dc43d35242117f95e220dd38635e1a4cc8083))
+
+
+### Bug Fixes
+
+* adding badges to readme ([b3b7487](https://github.com/brayn003/stonk.ninja/commit/b3b7487230d39b9d91523c948471cf4f4dfd85e5))
+* adding env example to tick-workers ([848fe70](https://github.com/brayn003/stonk.ninja/commit/848fe7090c0b9e231b6d597f66a15156018dacb2))
+* adding main stack file for pulumi ([8fd56e3](https://github.com/brayn003/stonk.ninja/commit/8fd56e3ac7d240987c9cfd55f565d7591b358fd9))
+* adding release please ([9563d6d](https://github.com/brayn003/stonk.ninja/commit/9563d6dc6652ac613763a755297e353cf6534233))
+* adding test in worker readme ([4f26c89](https://github.com/brayn003/stonk.ninja/commit/4f26c89b78b57422465d6d1058c3d7c117070512))
+* changing env value ([b79fc9b](https://github.com/brayn003/stonk.ninja/commit/b79fc9b6186285e593ace780c0a5183ea1a8565b))
+* fixing actions with readme ([cb5b939](https://github.com/brayn003/stonk.ninja/commit/cb5b93944b8a32783462d1bb8090e7d1a91b3d5a))
+* fixing env example ([a43c2c3](https://github.com/brayn003/stonk.ninja/commit/a43c2c339b6465e95eb75e7faf814b5da0d3eb31))
+* minor changes ([bc2f203](https://github.com/brayn003/stonk.ninja/commit/bc2f2030419c405869d58586de1e5d197b2c98d7))
+* minor rnv change ([dbb7547](https://github.com/brayn003/stonk.ninja/commit/dbb75479fe2e4ce95631bf5fd2fdd6a059debc6d))
+* restructuring tick workers ([52fd0ae](https://github.com/brayn003/stonk.ninja/commit/52fd0ae61374b30417e6461b78e5b88783b330cf))
+* testing release workflow ([bb80b1b](https://github.com/brayn003/stonk.ninja/commit/bb80b1bdbbc5db70d296815eba7ce44e14935bd1))
+
+
+### Miscellaneous Chores
+
+* release 0.0.1 ([c32d076](https://github.com/brayn003/stonk.ninja/commit/c32d076e007a33218578b7e5d1609f642c88bd64))
+* release 0.0.2 ([192d306](https://github.com/brayn003/stonk.ninja/commit/192d306b714948501d44a9923d441cb586bb0e67))
+* release 0.0.5 ([0c92abc](https://github.com/brayn003/stonk.ninja/commit/0c92abcbf34d1500c0ab49ce94bc0cd949f1dc46))
+* release 0.0.6 ([440803d](https://github.com/brayn003/stonk.ninja/commit/440803dcf27c7a26ae0e7734a707d8279d45bc0c))
+* release 0.0.7 ([6b6174b](https://github.com/brayn003/stonk.ninja/commit/6b6174b20b76fad05e77f6ad0e42ef9da73bc374))
+* release 0.1.0 ([b26f29d](https://github.com/brayn003/stonk.ninja/commit/b26f29de37e101846ad0d1077a68a6d3e8b0aa2a))
+* release 0.1.1 ([f1866ae](https://github.com/brayn003/stonk.ninja/commit/f1866ae8b574761f8da393c4a5786ee1f2c141dd))
+* release 0.1.10 ([4cf3711](https://github.com/brayn003/stonk.ninja/commit/4cf3711a45133cd3da675dfa7a41f9f5f0262e1d))
+* release 0.1.11 ([d28ea17](https://github.com/brayn003/stonk.ninja/commit/d28ea17f228168a4aef48176fc9a81e80c965d9b))
+* release 0.1.2 ([cf502dd](https://github.com/brayn003/stonk.ninja/commit/cf502dd574b34f10b1542eb7559306a6e6ae8595))
+* release 0.1.4 ([96dda72](https://github.com/brayn003/stonk.ninja/commit/96dda7296dce348b54f6ce2141d4065841e6ef92))
+* release 0.1.5 ([5c73ecc](https://github.com/brayn003/stonk.ninja/commit/5c73eccdf7e51ac142b1f3143e9b427e7b9b2e39))
+* release 0.1.6 ([458f6a1](https://github.com/brayn003/stonk.ninja/commit/458f6a13d4a99d513a8d9aae1c374e69cb0bb675))
+* release 0.1.7 ([e4d50b0](https://github.com/brayn003/stonk.ninja/commit/e4d50b02c9f1fb4038cb13dee210cf1582279061))
+* release 0.1.8 ([1dcb644](https://github.com/brayn003/stonk.ninja/commit/1dcb6440bfb3cfe00f1490522f84d5ce67a8df2c))
+
 ## [0.1.10](https://github.com/brayn003/stonk.ninja/compare/v0.1.8...tick-workers/v0.1.10) (2024-03-25)
 
 
