@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.10](https://github.com/brayn003/stonk.ninja/compare/v0.1.9...v0.1.10) (2024-03-25)
+
+
+### Bug Fixes
+
+* adding debug value ([27bd777](https://github.com/brayn003/stonk.ninja/commit/27bd777d5f2e8a8856099bb748ff070d0c35916a))
+* adding debug value for actions ([9b11e4e](https://github.com/brayn003/stonk.ninja/commit/9b11e4eb369548bb1e0e9ee28c241d805e731df2))
+* adding test in worker readme ([4f26c89](https://github.com/brayn003/stonk.ninja/commit/4f26c89b78b57422465d6d1058c3d7c117070512))
+* minor config changes ([72612ac](https://github.com/brayn003/stonk.ninja/commit/72612ac57046b7a6a79744ced72dc4712a470c16))
+* removing manifest log ([1adcf11](https://github.com/brayn003/stonk.ninja/commit/1adcf112a3dd8d8505427ea821160374448442df))
+
+
+### Miscellaneous Chores
+
+* release 0.1.10 ([4cf3711](https://github.com/brayn003/stonk.ninja/commit/4cf3711a45133cd3da675dfa7a41f9f5f0262e1d))
+
 ## [0.1.9](https://github.com/brayn003/stonk.ninja/compare/v0.1.8...v0.1.9) (2024-03-25)
 
 
