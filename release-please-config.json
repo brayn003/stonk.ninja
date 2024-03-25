@@ -1,7 +1,8 @@
 {
     "release-type": "simple",
     "group-pull-request-title-pattern": "chore: release v${version}" ,
-
+    "pull-request-header": "## Changelog stonk.ninja",
+    "pull-request-footer": "",
     "packages": {
 
       ".": {
