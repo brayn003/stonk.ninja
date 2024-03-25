@@ -2,17 +2,24 @@
     "release-type": "simple",
 
     "packages": {
+      ".": {
+        "package-name": "stonk.ninja",
+        "release-type": "simple"
+      },
       "server": {
         "package-name": "stonk.ninja-server",
-        "release-type": "python"
+        "release-type": "python",
+        "skip-github-release": true
       },
       "client": {
         "package-name": "stonk.ninja-client",
-        "release-type": "node"
+        "release-type": "node",
+        "skip-github-release": true
       },
       "tick-workers": {
         "package-name": "stonk.ninja-tick-workers",
-        "release-type": "node"
+        "release-type": "node",
+        "skip-github-release": true
       }
     }
   }
