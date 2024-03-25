@@ -12,15 +12,18 @@
       },
       "server": {
         "package-name": "server",
-        "release-type": "python"
+        "release-type": "python",
+        "skip-github-release": true
       },
       "client": {
         "package-name": "client",
-        "release-type": "node"
+        "release-type": "node",
+        "skip-github-release": true
       },
       "tick-workers": {
         "package-name": "tick-workers",
-        "release-type": "node"
+        "release-type": "node",
+        "skip-github-release": true
       }
     }
   }
