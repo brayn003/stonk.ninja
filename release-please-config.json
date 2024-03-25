@@ -1,7 +1,9 @@
 {
     "release-type": "simple",
+    "group-pull-request-title-pattern": "chore: release v${version}" ,
 
     "packages": {
+
       ".": {
         "package-name": "stonk.ninja",
         "release-type": "simple",
