@@ -4,7 +4,8 @@
     "packages": {
       ".": {
         "package-name": "stonk.ninja",
-        "release-type": "simple"
+        "release-type": "simple",
+        "include-component-in-tag": false
       },
       "server": {
         "package-name": "stonk.ninja-server",
