@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-server-v0.1.2...stonk.ninja-server-v0.1.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* adding main stack file for pulumi ([8fd56e3](https://github.com/brayn003/stonk.ninja/commit/8fd56e3ac7d240987c9cfd55f565d7591b358fd9))
+
 ## [0.1.2](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-server-v0.1.1...stonk.ninja-server-v0.1.2) (2024-03-25)
 
 
