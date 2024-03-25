@@ -66,9 +66,6 @@ jobs:
           echo "${{ steps.release.outputs.client--release_created }}"
           echo "${{ steps.release.outputs.server--release_created }}"
           echo "${{ steps.release.outputs.tick-workers--release_created }}"
-      - run: |
-          echo "Manifest"
-          echo "${{ toJson(steps.release.outputs) }}"
 
 
   push-server:
