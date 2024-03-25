@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/app/dashboard",
+      Location: "/private/dashboard",
       "Set-Cookie": sessionCookie,
     },
   });
