@@ -1,0 +1,7 @@
+name: stonk-ninja-apps
+runtime: nodejs
+description: Kubernetes deployment for stonk.ninja apps
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-typescript

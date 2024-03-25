@@ -189,9 +189,8 @@ supervisord.pid
 volumes/
 
 # deployment
-deploy/helm/
-deploy/helm-vendor/
-pulumi/
+pulumi/vendors
+pulumi/**/Pulumi.*.yaml
 
 # ide
 .vscode
