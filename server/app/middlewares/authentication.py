@@ -14,7 +14,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             status_code=403,
             content={"message": "Unauthorized"},
         )
-        if "kite_session_id" not in request.session:
+        if "user" not in request.session:
             return error_response
 
         kite_session_id = request.session["kite_session_id"]

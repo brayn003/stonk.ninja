@@ -19,6 +19,7 @@ class Db:
         self._db: Database = client[MONGODB_DB_NAME]
         self.sessions: Collection = None
         self.ticks: Collection = None
+        self.users: Collection = None
 
     def setup_db(self):
         collection_names = self._db.list_collection_names()
@@ -30,8 +31,12 @@ class Db:
                 "ticks", timeseries={"timeField": "timestamp", "metaField": "metadata"}
             )
             ticks_collection.create_index("metadata.tradingsymbol")
+        if "users" not in collection_names:
+            users_collection = self._db.create_collection("users")
+            users_collection.create_index("email", unique=True)
         self.sessions = self._db["sessions"]
         self.ticks = self._db["ticks"]
+        self.users = self._db["users"]
         print(f"[Initialized] Database: {MONGODB_DB_NAME}")
 
 
