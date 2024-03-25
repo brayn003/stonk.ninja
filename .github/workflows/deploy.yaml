@@ -44,20 +44,9 @@ jobs:
           stack-name: prod
           work-dir: pulumi/apps
           config-map: |
-            environment:
-              - env-apps-prod
             version_server: ${{ env.version_server }}
             version_client: ${{ env.version_client }}
             version_tick_workers: ${{ env.version_tick_workers }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      # - name: Update set config
-      #   working-directory: pulumi/apps
-      #   run: |
-      #     pulumi config env add prod env-apps-prod --yes
-      #     pulumi config set version_server ${{ env.version_server }}
-      #     pulumi config set version_client ${{ env.version_client }}
-      #     pulumi config set version_tick_workers ${{ env.version_tick_workers }}
-      # - name: Deploy
-      #   working-directory: pulumi/apps
-      #   run: pulumi up --yes
+
