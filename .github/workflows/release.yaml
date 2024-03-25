@@ -53,12 +53,23 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     outputs:
+      paths_released: ${{ steps.release.outputs.paths_released }}
       client: ${{ steps.release.outputs.client--release_created }}
       server: ${{ steps.release.outputs.server--release_created }}
       tick-workers: ${{ steps.release.outputs.tick-workers--release_created }}
     steps:
       - uses: google-github-actions/release-please-action@v4
         id: release
+      - run: |
+          echo "Released"
+          echo "${{ steps.release.outputs.paths_released }}"
+          echo "${{ steps.release.outputs.client--release_created }}"
+          echo "${{ steps.release.outputs.server--release_created }}"
+          echo "${{ steps.release.outputs.tick-workers--release_created }}"
+      - run: |
+          echo "Manifest"
+          echo "${{ toJson(steps.release.outputs) }}"
+
 
   push-server:
     needs: release-please
