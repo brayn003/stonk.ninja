@@ -10,30 +10,75 @@ permissions:
   pull-requests: write
 
 jobs:
+  # path-filter:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     server: ${{ steps.filter.outputs.server }}
+  #     client: ${{ steps.filter.outputs.client }}
+  #     tick-workers: ${{ steps.filter.outputs.tick-workers }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Path Filter
+  #       uses: dorny/paths-filter@v2
+  #       id: filter
+  #       with:
+  #         base: ${{ github.ref }}
+  #         filters: |
+  #           server:
+  #             - 'server/**'
+  #           client:
+  #             - 'client/**'
+  #           tick-workers:
+  #             - 'tick-workers/**'
+
+  # build-server:
+  #   needs: path-filter
+  #   if: ${{ needs.path-filter.outputs.server }}
+  #   uses: brayn003/stonk.ninja/.github/workflows/build-server.yaml@main
+  #   secrets: inherit
+
+  # build-client:
+  #   needs: path-filter
+  #   if: ${{ needs.path-filter.outputs.client }}
+  #   uses: brayn003/stonk.ninja/.github/workflows/build-client.yaml@main
+  #   secrets: inherit
+
+  # build-tick-workers:
+  #   needs: path-filter
+  #   if: ${{ needs.path-filter.outputs.tick-workers }}
+  #   uses: brayn003/stonk.ninja/.github/workflows/build-tick-workers.yaml@main
+  #   secrets: inherit
+
   release-please:
     runs-on: ubuntu-latest
     outputs:
-      server--release_created: ${{ steps.release.outputs.server--release_created }}
-      client--release_created: ${{ steps.release.outputs.client--release_created }}
-      tick-workers--release_created: ${{ steps.release.outputs.tick-workers--release_created }}
+      client: ${{ steps.release.outputs.client--release_created }}
+      server: ${{ steps.release.outputs.server--release_created }}
+      tick-workers: ${{ steps.release.outputs.tick-workers--release_created }}
     steps:
       - uses: google-github-actions/release-please-action@v4
         id: release
-  
-  release-server:
+
+  push-server:
     needs: release-please
-    if: ${{ needs.release-please.outputs.server--release_created }}
-    uses: brayn003/stonk.ninja/.github/workflows/release-server.yaml@main
+    if: ${{ needs.release-please.outputs.server }}
+    uses: brayn003/stonk.ninja/.github/workflows/push-server.yaml@main
     secrets: inherit
 
-  release-client:
+  push-client:
     needs: release-please
-    if: ${{ needs.release-please.outputs.client--release_created }}
-    uses: brayn003/stonk.ninja/.github/workflows/release-client.yaml@main
+    if: ${{ needs.release-please.outputs.client }}
+    uses: brayn003/stonk.ninja/.github/workflows/push-client.yaml@main
     secrets: inherit
 
-  release-tick-workers:
+  push-tick-workers:
     needs: release-please
-    if: ${{ needs.release-please.outputs.tick-workers--release_created }}
-    uses: brayn003/stonk.ninja/.github/workflows/release-tick-workers.yaml@main
+    if: ${{ needs.release-please.outputs.tick-workers }}
+    uses: brayn003/stonk.ninja/.github/workflows/push-tick-workers.yaml@main
+    secrets: inherit
+
+  deploy:
+    needs: [push-server, push-client, push-tick-workers]
+    uses: brayn003/stonk.ninja/.github/workflows/deploy.yaml@main
     secrets: inherit

@@ -1,10 +1,10 @@
-name: Release client
+name: Release tick-workers
 
 on:
   workflow_call:
 
 jobs:
-  build-and-push:
+  push:
     runs-on: ubuntu-latest
     steps:
       - name: Get release manifest
@@ -12,14 +12,14 @@ jobs:
         run: |
           REPO=${{ github.repository }}
           RELEASE_MANIFEST=$(wget https://raw.githubusercontent.com/$REPO/main/.release-please-manifest.json -q -O -)
-          VERSION=$(jq -r '.client' <<< "${RELEASE_MANIFEST}")
+          VERSION=$(jq -r '."tick-workers"' <<< "${RELEASE_MANIFEST}")
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-client
+            ${{ secrets.DOCKERHUB_ORG }}/stonk.ninja-tick-workers
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{version}},value=${{ steps.release-manifest.outputs.version }}
@@ -34,11 +34,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_ORG }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:client"
+          context: "{{defaultContext}}:tick-workers"
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
