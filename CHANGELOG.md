@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/brayn003/stonk.ninja/compare/v0.1.8...v0.1.9) (2024-03-25)
+
+
+### Bug Fixes
+
+* fixing broken login redirects ([#18](https://github.com/brayn003/stonk.ninja/issues/18)) ([69e12b2](https://github.com/brayn003/stonk.ninja/commit/69e12b20de8c318cfe18a334ec069f7b8734ac96))
+
 ## [0.1.8](https://github.com/brayn003/stonk.ninja/compare/v0.1.7...v0.1.8) (2024-03-25)
 
 
