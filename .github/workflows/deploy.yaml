@@ -37,6 +37,11 @@ jobs:
       - name: Install dependencies
         working-directory: pulumi
         run: pnpm install
+      - name: Set kubernetes config
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Pulumi up
         uses: pulumi/actions@v5
         with:
@@ -49,6 +54,4 @@ jobs:
             version_tick_workers: ${{ env.version_tick_workers }}
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
 
