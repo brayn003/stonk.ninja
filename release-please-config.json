@@ -1,7 +1,7 @@
 {
     "release-type": "simple",
     "group-pull-request-title-pattern": "chore: release v${version}" ,
-    "pull-request-header": "## :tada: stonk.ninja changelog",
+    "pull-request-header": "### :tada: stonk.ninja changelog",
     "tag-separator": "/",
     "packages": {
       ".": {
