@@ -1,6 +1,4 @@
 # stonk.ninja client
-![Release client](https://github.com/brayn003/stonk.ninja/actions/workflows/release-client.yaml/badge.svg)
-
 `stonk.ninja client` is a robust and dynamic visualization tool for market data analysis. It is built on top of `stonk.ninja server`, providing a user-friendly interface to interact with and understand complex market data. It also offers real-time visualizations for market activity, allowing users to monitor market trends and make informed decisions. 
 
 ## Features ✨

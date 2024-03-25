@@ -190,7 +190,6 @@ volumes/
 
 # deployment
 pulumi/vendors
-pulumi/**/Pulumi.*.yaml
 
 # ide
 .vscode

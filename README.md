@@ -1,9 +1,5 @@
 # Stonk Ninja
 ![Release](https://github.com/brayn003/stonk.ninja/actions/workflows/release.yaml/badge.svg)
-![Release server](https://github.com/brayn003/stonk.ninja/actions/workflows/release-server.yaml/badge.svg)
-![Release client](https://github.com/brayn003/stonk.ninja/actions/workflows/release-client.yaml/badge.svg)
-![Release tick-workers](https://github.com/brayn003/stonk.ninja/actions/workflows/release-tick-workers.yaml/badge.svg)
-
 
 `stonk.ninja` is a platform where the exciting world of trading is combined with the precision of computer science. It uses powerful algorithmic and quantitative trading strategies, which are methods for buying and selling securities. These strategies are designed and executed with the accuracy and efficiency of software engineering principles. In other words, `stonk.ninja` is where finance meets technology.
 

@@ -1,6 +1,4 @@
 # stonk.ninja tick-workers
-![Release tick-workers](https://github.com/brayn003/stonk.ninja/actions/workflows/release-tick-workers.yaml/badge.svg)
-
 `stonk.ninja tick-workers` are a collection of programs that manage tick-data in realtime.
 
 ## Technology 💻
