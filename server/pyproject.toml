@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stonk-ninja-server"
-version = "0.1.7"
+version = "0.1.8"
 description = "Python server for running analysis on stock data"
 authors = ["Rudraprasad Das <brayn003@gmail.com>"]
 packages = [

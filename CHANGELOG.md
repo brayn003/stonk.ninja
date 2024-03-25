@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.8](https://github.com/brayn003/stonk.ninja/compare/v0.1.7...v0.1.8) (2024-03-25)
+
+
+### Bug Fixes
+
+* fixing release config minor ([a302b46](https://github.com/brayn003/stonk.ninja/commit/a302b463cc2fca3405ce191a18971117c3563adb))
+* minor template title change ([d9035e5](https://github.com/brayn003/stonk.ninja/commit/d9035e5f36dec08b778a602a77a0d7282920a5f4))
+
+
+### Miscellaneous Chores
+
+* release 0.1.8 ([1dcb644](https://github.com/brayn003/stonk.ninja/commit/1dcb6440bfb3cfe00f1490522f84d5ce67a8df2c))
+
 ## 0.1.7 (2024-03-25)
 
 

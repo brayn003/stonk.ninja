@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.8](https://github.com/brayn003/stonk.ninja/compare/v0.1.7...stonk.ninja-server-v0.1.8) (2024-03-25)
+
+
+### Miscellaneous Chores
+
+* release 0.1.8 ([1dcb644](https://github.com/brayn003/stonk.ninja/commit/1dcb6440bfb3cfe00f1490522f84d5ce67a8df2c))
+
 ## [0.1.7](https://github.com/brayn003/stonk.ninja/compare/stonk.ninja-server-v0.1.6...stonk.ninja-server-v0.1.7) (2024-03-25)
 
 
