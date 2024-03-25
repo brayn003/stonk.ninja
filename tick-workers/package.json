@@ -1,6 +1,6 @@
 {
   "name": "@stonk.ninja/tick-workers",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "private": true,
   "main": "dist/index.js",
   "scripts": {

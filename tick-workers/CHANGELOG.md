@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.10](https://github.com/brayn003/stonk.ninja/compare/v0.1.8...tick-workers/v0.1.10) (2024-03-25)
+
+
+### Bug Fixes
+
+* adding test in worker readme ([4f26c89](https://github.com/brayn003/stonk.ninja/commit/4f26c89b78b57422465d6d1058c3d7c117070512))
+
+
+### Miscellaneous Chores
+
+* release 0.1.10 ([4cf3711](https://github.com/brayn003/stonk.ninja/commit/4cf3711a45133cd3da675dfa7a41f9f5f0262e1d))
+
 ## [0.1.8](https://github.com/brayn003/stonk.ninja/compare/v0.1.7...stonk.ninja-tick-workers-v0.1.8) (2024-03-25)
 
 
