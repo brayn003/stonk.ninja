@@ -8,16 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Get version
         run: |
           echo "version_client=$(jq -r '.client' .release-please-manifest.json)" >> "$GITHUB_ENV"
           echo "version_server=$(jq -r '.server' .release-please-manifest.json)" >> "$GITHUB_ENV"
           echo "version_tick_workers=$(jq -r '."tick-workers"' .release-please-manifest.json)" >> "$GITHUB_ENV"
-      - name: Install pulumi
-        uses: pulumi/actions@v3
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -39,18 +35,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
-        working-directory: pulumi/apps
+        working-directory: pulumi
         run: pnpm install
-      - name: Update set stack
-        working-directory: pulumi/apps
-        run: pulumi stack select prod
-      - name: Update set config
-        working-directory: pulumi/apps
-        run: |
-          pulumi config env add prod env-apps-prod --yes
-          pulumi config set version_server ${{ env.version_server }}
-          pulumi config set version_client ${{ env.version_client }}
-          pulumi config set version_tick_workers ${{ env.version_tick_workers }}
-      - name: Deploy
-        working-directory: pulumi/apps
-        run: pulumi up --yes
+      - name: Pulumi up
+        uses: pulumi/actions@v5
+        with:
+          command: update
+          stack-name: prod
+          work-dir: pulumi/apps
+          config-map: |
+            environment:
+              - env-apps-prod
+            version_server: ${{ env.version_server }}
+            version_client: ${{ env.version_client }}
+            version_tick_workers: ${{ env.version_tick_workers }}
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      # - name: Update set config
+      #   working-directory: pulumi/apps
+      #   run: |
+      #     pulumi config env add prod env-apps-prod --yes
+      #     pulumi config set version_server ${{ env.version_server }}
+      #     pulumi config set version_client ${{ env.version_client }}
+      #     pulumi config set version_tick_workers ${{ env.version_tick_workers }}
+      # - name: Deploy
+      #   working-directory: pulumi/apps
+      #   run: pulumi up --yes
