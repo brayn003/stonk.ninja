@@ -7,9 +7,9 @@ from kiteconnect import KiteConnect
 from kiteconnect.exceptions import TokenException
 from pydantic import BaseModel, EmailStr, HttpUrl
 
+from app.helpers.store import Store
 from app.services.db import db
 from app.services.env import KITE_API_KEY, KITE_API_SECRET
-from app.services.store import Store
 
 kite_session_cache = Store("app:session")
 kite = KiteConnect(api_key=KITE_API_KEY)

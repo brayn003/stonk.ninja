@@ -17,6 +17,3 @@ class Store:
             return None
         del self.data[key]
         return True
-
-
-store = Store("app:global")

@@ -9,7 +9,8 @@ from app.errors import (
 from app.helpers.models import User
 from app.helpers.validators import is_valid_email, is_valid_password
 from app.services.db import db
-from app.services.kite import KiteSession, create_kite_session
+from app.services.kite import KiteSession
+from app.services.session import session_manager
 
 
 class LoginCallbackBody(BaseModel):
@@ -36,7 +37,7 @@ class LoginBody(BaseModel):
 
 
 class LoginResponse(BaseModel):
-    user: User
+    session_id: str
 
 
 router = APIRouter(prefix="/api/auth")
@@ -69,7 +70,7 @@ async def signup(body: SignupBody):
 
 
 @router.post("/login", response_model=LoginResponse, response_model_by_alias=False)
-async def login(body: LoginBody):
+async def login(request: Request, body: LoginBody):
     if not is_valid_email(body.email):
         raise InvalidEmailException("Email is invalid")
     user = db.users.find_one({"email": body.email})
@@ -81,12 +82,24 @@ async def login(body: LoginBody):
     )
     if not match:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    del user.password
-    return {"user": user}
+    # create session
+    session_id = request.session["session_id"]
+    session = None
+
+    if session_id:
+        session = session_manager.get(session_id)
+
+    if not session:
+        session = session_manager.create()
+        request.session["session_id"] = session.id
+
+    session.user = user
+    session_manager.set(session.id, session)
+    return {"session_id": session.id}
 
 
-@router.post("/login/callback", response_model=LoginCallbackResponse)
-async def login_callback(body: LoginCallbackBody, request: Request):
-    kite_session = create_kite_session(body.request_token)
-    request.session["kite_session_id"] = kite_session["sess_id"]
-    return {"kite_session": kite_session}
+# @router.post("/login/callback", response_model=LoginCallbackResponse)
+# async def login_callback(body: LoginCallbackBody, request: Request):
+#     kite_session = create_kite_session(body.request_token)
+#     request.session["kite_session_id"] = kite_session["sess_id"]
+#     return {"kite_session": kite_session}

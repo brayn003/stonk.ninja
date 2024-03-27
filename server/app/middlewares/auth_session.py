@@ -2,10 +2,10 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from app.services.kite import get_kite_session
+from app.services.session import session_manager
 
 
-class AuthenticationMiddleware(BaseHTTPMiddleware):
+class AuthSessionMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         if "/auth" in request.url.path:
             return await call_next(request)
@@ -14,13 +14,17 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             status_code=403,
             content={"message": "Unauthorized"},
         )
-        if "user" not in request.session:
+
+        session_id, session = None, None
+        if "session_id" in request.session:
+            session_id = request.session["session_id"]
+            session = session_manager.get(session_id)
+        else:
+            session = session_manager.create()
+            request.session["session_id"] = session.id
+            session_id = session.id
+
+        if not session.user:
             return error_response
 
-        kite_session_id = request.session["kite_session_id"]
-        kite_session = get_kite_session(kite_session_id)
-        if not kite_session:
-            return error_response
-
-        request.session["kite_session_id"] = kite_session["sess_id"]
         return await call_next(request)
