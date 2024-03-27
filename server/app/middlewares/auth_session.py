@@ -7,9 +7,6 @@ from app.services.session import session_manager
 
 class AuthSessionMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        if "/auth" in request.url.path:
-            return await call_next(request)
-
         error_response = JSONResponse(
             status_code=403,
             content={"message": "Unauthorized"},
@@ -23,6 +20,9 @@ class AuthSessionMiddleware(BaseHTTPMiddleware):
             session = session_manager.create()
             request.session["session_id"] = session.id
             session_id = session.id
+
+        if "/auth" in request.url.path or "/session" in request.url.path:
+            return await call_next(request)
 
         if not session.user:
             return error_response

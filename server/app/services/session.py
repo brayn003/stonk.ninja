@@ -20,7 +20,6 @@ class SessionManager:
 
     def get(self, session_id: str):
         session_json = self._store.get(f"{_SESSION_CACHE_KEY}:{session_id}")
-        print(session_json)
         if not session_json:
             return None
         return Session.model_validate_json(session_json)

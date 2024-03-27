@@ -10,7 +10,7 @@ from app.helpers.models import User
 from app.helpers.validators import is_valid_email, is_valid_password
 from app.services.db import db
 from app.services.kite import KiteSession
-from app.services.session import session_manager
+from app.services.session import Session, session_manager
 
 
 class LoginCallbackBody(BaseModel):
@@ -37,7 +37,7 @@ class LoginBody(BaseModel):
 
 
 class LoginResponse(BaseModel):
-    session_id: str
+    session: Session
 
 
 router = APIRouter(prefix="/api/auth")
@@ -84,18 +84,10 @@ async def login(request: Request, body: LoginBody):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     # create session
     session_id = request.session["session_id"]
-    session = None
-
-    if session_id:
-        session = session_manager.get(session_id)
-
-    if not session:
-        session = session_manager.create()
-        request.session["session_id"] = session.id
-
+    session = session_manager.get(session_id)
     session.user = user
     session_manager.set(session.id, session)
-    return {"session_id": session.id}
+    return {"session": session}
 
 
 # @router.post("/login/callback", response_model=LoginCallbackResponse)
