@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import ErrorAlert from "./_components/ErrorAlert";
-import KiteLogin from "./_components/KiteLogin";
+import UserLogin from "./_components/UserLogin";
 
 export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
+  // template is not supported in siblings
+  title: "Login | stonk.ninja",
 };
 
 export default function PageLogin() {
@@ -28,11 +28,10 @@ export default function PageLogin() {
             <ErrorAlert />
           </Suspense>
         </div>
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <Suspense>
-            <KiteLogin />
-          </Suspense>
-          {/* <p className="px-8 text-center text-sm text-muted-foreground">
+        <Suspense>
+          <UserLogin />
+        </Suspense>
+        {/* <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
                 href="/terms"
@@ -49,7 +48,6 @@ export default function PageLogin() {
               </Link>
               .
             </p> */}
-        </div>
       </div>
     </div>
   );

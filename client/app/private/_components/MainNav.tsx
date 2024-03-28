@@ -14,8 +14,8 @@ export default function MainNav({ className, ...props }: React.HTMLAttributes<HT
       href: "/private/dashboard",
     },
     {
-      name: "Capture",
-      href: "/private/capture",
+      name: "Settings",
+      href: "/private/settings",
     },
   ];
 
