@@ -3,7 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.middlewares.auth_session import AuthSessionMiddleware
-from app.routes import auth, session, ticks
+from app.routes import auth, integration_routes, session, ticks
 from app.services.env import SESSION_SECRET
 
 app = FastAPI(redirect_slashes=False)
@@ -22,6 +22,7 @@ app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
 app.include_router(auth.router)
 app.include_router(session.router)
 app.include_router(ticks.router)
+app.include_router(integration_routes.router)
 
 
 @app.get("/")

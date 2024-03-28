@@ -22,6 +22,7 @@ class Db:
         self.sessions: Collection = None
         self.ticks: Collection = None
         self.users: Collection = None
+        self.integrations: Collection = None
 
     def setup_db(self):
         collection_names = self._db.list_collection_names()
@@ -39,6 +40,10 @@ class Db:
         if "users" not in collection_names:
             users_collection = self._db.create_collection("users")
             users_collection.create_index("email", unique=True)
+
+        if "integrations" not in collection_names:
+            integrations_collection = self._db.create_collection("integrations")
+            integrations_collection.create_index("type", unique=True)
 
         # init seeders
         user_count = self._db["users"].estimated_document_count()
@@ -64,6 +69,7 @@ class Db:
         self.sessions = self._db["sessions"]
         self.ticks = self._db["ticks"]
         self.users = self._db["users"]
+        self.integrations = self._db["integrations"]
 
         print("[Initialized] Database")
 
