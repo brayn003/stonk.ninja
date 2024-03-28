@@ -6,7 +6,7 @@ from app.middlewares.auth_session import AuthSessionMiddleware
 from app.routes import auth, session, ticks
 from app.services.env import SESSION_SECRET
 
-app = FastAPI()
+app = FastAPI(redirect_slashes=False)
 
 app.add_middleware(
     CORSMiddleware,

@@ -11,7 +11,6 @@ class AuthSessionMiddleware(BaseHTTPMiddleware):
             status_code=403,
             content={"message": "Unauthorized"},
         )
-
         session_id, session = None, None
         if "session_id" in request.session:
             session_id = request.session["session_id"]

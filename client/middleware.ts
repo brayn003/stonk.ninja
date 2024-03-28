@@ -1,25 +1,27 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const reqCookie = request.headers.get("cookie");
   // get session and cookie-value from server
-  let data, cookieVal;
+  let data, resCookie;
   try {
-    const res = await fetch(`${process.env.SERVER_PRIVATE_URL}/api/session`);
-    cookieVal = res.headers.get("set-cookie");
+    const reqHeaders = new Headers();
+    if (reqCookie) reqHeaders.set("cookie", reqCookie);
+    const res = await fetch(`${process.env.SERVER_PRIVATE_URL}/api/session`, { headers: reqHeaders });
+    resCookie = res.headers.get("set-cookie");
     data = await res.json();
   } catch (err) {
-    cookieVal = null;
+    resCookie = null;
   }
 
   // set cookie if session cookie is not present
-  const session = request.cookies.get("session")?.value;
   const headers = new Headers();
-  if (!session && cookieVal) {
-    headers.set("set-cookie", cookieVal);
+  if (resCookie) {
+    headers.set("set-cookie", resCookie);
   }
 
   //  if user does not exist in session and route is private then redirect to home
-  if (!data.user && request.nextUrl.pathname.startsWith("/private")) {
+  if (!data.session.user && request.nextUrl.pathname.startsWith("/private")) {
     headers.set("location", process.env.CLIENT_URL ?? "/");
     return new Response(null, { status: 302, headers });
   }

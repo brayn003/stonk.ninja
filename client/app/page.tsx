@@ -5,8 +5,8 @@ import ErrorAlert from "./_components/ErrorAlert";
 import UserLogin from "./_components/UserLogin";
 
 export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
+  // template is not supported in siblings
+  title: "Login | stonk.ninja",
 };
 
 export default function PageLogin() {

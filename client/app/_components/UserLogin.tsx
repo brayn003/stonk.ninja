@@ -1,29 +1,48 @@
 "use client";
 
-import type { AxiosResponse } from "axios";
-import axios from "axios";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-interface LoginResponse {
-  login_url: string;
-}
+const loginFormSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8).max(32),
+});
+
 interface UserLoginProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function UserLogin({ className, ...props }: UserLoginProps) {
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  async function onClick() {
+  const router = useRouter();
+
+  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
     setIsLoading(true);
-    const res: AxiosResponse<LoginResponse> = await axios.post("/api/auth/login");
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: { "Content-Type": "application/json" },
+    });
     setIsLoading(false);
-    window.open(res.data.login_url, "_self");
+    if (res.ok) {
+      router.push("/private/dashboard");
+    }
   }
 
   return (
@@ -31,46 +50,69 @@ export default function UserLogin({ className, ...props }: UserLoginProps) {
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">Welcome back!</h1>
-          <p className="text-sm text-muted-foreground">Enter your email below to log into your account</p>
+          <p className="text-sm text-muted-foreground">
+            Enter your email below to log into <strong>stonk.ninja</strong>
+          </p>
         </div>
       </div>
+
       <div className={cn("grid gap-6", className)} {...props}>
-        <form onSubmit={() => {}}>
-          <div className="grid gap-2">
-            <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="email">
-                Email
-              </Label>
-              <Input
-                id="email"
-                placeholder="name@example.com"
-                type="email"
-                autoCapitalize="none"
-                autoComplete="email"
-                autoCorrect="off"
-                disabled={isLoading}
-              />
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-2">
+              <div className="grid gap-1">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          id="email"
+                          placeholder="name@example.com"
+                          type="email"
+                          autoCapitalize="none"
+                          autoComplete="email"
+                          autoCorrect="off"
+                          disabled={isLoading}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid gap-1">
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          id="password"
+                          placeholder="password"
+                          type="password"
+                          autoCapitalize="none"
+                          autoComplete="password"
+                          autoCorrect="off"
+                          disabled={isLoading}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Log In with Email
+              </Button>
             </div>
-            <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="password">
-                Password
-              </Label>
-              <Input
-                id="password"
-                placeholder="password"
-                type="password"
-                autoCapitalize="none"
-                autoComplete="password"
-                autoCorrect="off"
-                disabled={isLoading}
-              />
-            </div>
-            <Button disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Log In with Email
-            </Button>
-          </div>
-        </form>
+          </form>
+        </Form>
         {/* <div className="relative">
         <div className="absolute inset-0 flex items-center">
         <span className="w-full border-t" />

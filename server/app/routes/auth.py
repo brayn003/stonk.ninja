@@ -1,24 +1,14 @@
-import bcrypt
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 from app.errors import (
     InvalidEmailException,
-    UserAlreadyExistsException,
 )
+from app.helpers.auth import compare_passwords, hash_password
 from app.helpers.models import User
 from app.helpers.validators import is_valid_email, is_valid_password
 from app.services.db import db
-from app.services.kite import KiteSession
 from app.services.session import Session, session_manager
-
-
-class LoginCallbackBody(BaseModel):
-    request_token: str
-
-
-class LoginCallbackResponse(BaseModel):
-    kite_session: KiteSession
 
 
 class SignupBody(BaseModel):
@@ -54,13 +44,11 @@ async def signup(body: SignupBody):
     )
     exists = bool(existing_user)
     if exists:
-        raise UserAlreadyExistsException("User already exists")
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(bytes(body.password, encoding="utf-8"), salt)
+        raise HTTPException(status_code=409, detail="User already exists")
     user_body = User(
         full_name=body.full_name,
         email=body.email,
-        password=hashed,
+        password=hash_password(body.password),
     )
     res = db.users.insert_one(user_body.model_dump())
     user = db.users.find_one({"_id": res.inserted_id})
@@ -74,12 +62,10 @@ async def login(request: Request, body: LoginBody):
     if not is_valid_email(body.email):
         raise InvalidEmailException("Email is invalid")
     user = db.users.find_one({"email": body.email})
-    user = User.model_validate(user)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    match = bcrypt.checkpw(
-        bytes(body.password, encoding="utf-8"), bytes(user.password, encoding="utf-8")
-    )
+    user = User.model_validate(user)
+    match = compare_passwords(body.password, user.password)
     if not match:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     # create session
@@ -88,10 +74,3 @@ async def login(request: Request, body: LoginBody):
     session.user = user
     session_manager.set(session.id, session)
     return {"session": session}
-
-
-# @router.post("/login/callback", response_model=LoginCallbackResponse)
-# async def login_callback(body: LoginCallbackBody, request: Request):
-#     kite_session = create_kite_session(body.request_token)
-#     request.session["kite_session_id"] = kite_session["sess_id"]
-#     return {"kite_session": kite_session}
