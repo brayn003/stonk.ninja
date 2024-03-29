@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-export default function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
+export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   const pathname = usePathname();
 
   const menuItems = [
@@ -15,7 +15,7 @@ export default function MainNav({ className, ...props }: React.HTMLAttributes<HT
     },
     {
       name: "Settings",
-      href: "/private/settings",
+      href: "/private/settings/integrations",
     },
   ];
 
