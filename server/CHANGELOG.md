@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/brayn003/stonk.ninja/compare/server/v0.2.1...server/v0.2.2) (2024-03-31)
+
+
+### Bug Fixes
+
+* fixing server issue for empty user ([#28](https://github.com/brayn003/stonk.ninja/issues/28)) ([61ea494](https://github.com/brayn003/stonk.ninja/commit/61ea494bb8475abb6787970433698b7aed557cea))
+
 ## [0.2.1](https://github.com/brayn003/stonk.ninja/compare/server/v0.2.0...server/v0.2.1) (2024-03-31)
 
 
