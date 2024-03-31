@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
 
   //  if user does not exist in session and route is private then redirect to home
   if (!data?.session?.user && request.nextUrl.pathname.startsWith("/private")) {
-    headers.set("location", process.env.CLIENT_URL ?? "/");
+    headers.set("location", "/");
     return new Response(null, { status: 302, headers });
   }
   // else continue
