@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/brayn003/stonk.ninja/compare/v0.2.2...v0.2.3) (2024-03-31)
+
+
+### Bug Fixes
+
+* fixing logic for missing user ([4280aaa](https://github.com/brayn003/stonk.ninja/commit/4280aaa0df2259daed3194c13a9395d750782a77))
+
 ## [0.2.2](https://github.com/brayn003/stonk.ninja/compare/v0.2.1...v0.2.2) (2024-03-31)
 
 
