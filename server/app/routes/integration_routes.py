@@ -78,6 +78,8 @@ async def load_integration_session(integration_type: IntegrationType):
 @router.get("/integrations/{integration_type}/sessions/default", responses={204: {"model": None}})
 async def get_integration_session(integration_type: IntegrationType):
     integration = IntegrationManager.get_integration(integration_type)
+    if integration is None:
+        raise HTTPException(status_code=404, detail="Integration not found")
     integration_session = await IntegrationSessionManager.get_session(integration, "default")
     return {"integration_session": integration_session}
 
