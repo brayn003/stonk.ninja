@@ -97,5 +97,5 @@ async def load_kiteconnect(integration: KiteIntegration):
         request_token = queries["request_token"][0]
         kite = KiteConnect(api_key=api_key)
         kite_session_dict = kite.generate_session(request_token, api_secret=api_secret)
-        session = KiteSession(data=kite_session_dict)
-        cache.set(cache_key, session.model_dump_json())
+        integration_session = KiteSession(data=kite_session_dict)
+        cache.set(cache_key, integration_session.model_dump_json())

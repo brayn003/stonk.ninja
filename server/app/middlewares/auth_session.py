@@ -2,7 +2,7 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from app.services.session import session_manager
+from app.helpers.session import SessionManager
 
 
 class AuthSessionMiddleware(BaseHTTPMiddleware):
@@ -11,14 +11,16 @@ class AuthSessionMiddleware(BaseHTTPMiddleware):
             status_code=403,
             content={"message": "Unauthorized"},
         )
-        session_id, session = None, None
+        session_id = None
+        session = None
         if "session_id" in request.session:
             session_id = request.session["session_id"]
-            session = session_manager.get(session_id)
-        else:
-            session = session_manager.create()
-            request.session["session_id"] = session.id
+            session = SessionManager.get_session(session_id)
+
+        if not session:
+            session = SessionManager.create_session()
             session_id = session.id
+            request.session["session_id"] = session_id
 
         if "/auth" in request.url.path or "/session" in request.url.path:
             return await call_next(request)

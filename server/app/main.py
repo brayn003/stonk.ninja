@@ -6,13 +6,16 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.middlewares.auth_session import AuthSessionMiddleware
 from app.models.integration import IntegrationManager
-from app.routes import auth, integration_routes, session, ticks
+from app.routes import auth, integration_routes, session_routes, ticks
 from app.services.env import SESSION_SECRET
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+# pylint: disable=unused-argument
+async def lifespan(fastapi_app: FastAPI):
+    # pylint: enable=unused-argument
     await IntegrationManager.load_all_integrations()
+    print("[Initialized] Integrations")
     yield
 
 
@@ -29,7 +32,7 @@ app.add_middleware(AuthSessionMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
 
 app.include_router(auth.router)
-app.include_router(session.router)
+app.include_router(session_routes.router)
 app.include_router(ticks.router)
 app.include_router(integration_routes.router)
 

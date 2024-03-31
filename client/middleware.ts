@@ -4,14 +4,12 @@ export async function middleware(request: NextRequest) {
   const reqCookie = request.headers.get("cookie");
   // get session and cookie-value from server
   let data, resCookie;
-  try {
-    const reqHeaders = new Headers();
-    if (reqCookie) reqHeaders.set("cookie", reqCookie);
-    const res = await fetch(`${process.env.SERVER_PRIVATE_URL}/api/session`, { headers: reqHeaders });
+  const reqHeaders = new Headers();
+  if (reqCookie) reqHeaders.set("cookie", reqCookie);
+  const res = await fetch(`${process.env.SERVER_PRIVATE_URL}/api/session`, { headers: reqHeaders });
+  if (res.ok) {
     resCookie = res.headers.get("set-cookie");
     data = await res.json();
-  } catch (err) {
-    resCookie = null;
   }
 
   // set cookie if session cookie is not present
@@ -21,7 +19,7 @@ export async function middleware(request: NextRequest) {
   }
 
   //  if user does not exist in session and route is private then redirect to home
-  if (!data.session.user && request.nextUrl.pathname.startsWith("/private")) {
+  if (!data?.session?.user && request.nextUrl.pathname.startsWith("/private")) {
     headers.set("location", process.env.CLIENT_URL ?? "/");
     return new Response(null, { status: 302, headers });
   }
