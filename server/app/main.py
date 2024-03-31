@@ -14,7 +14,7 @@ from app.services.env import SESSION_SECRET
 # pylint: disable=unused-argument
 async def lifespan(fastapi_app: FastAPI):
     # pylint: enable=unused-argument
-    await IntegrationManager.load_all_integrations()
+    await IntegrationManager.load_all_sessions()
     print("[Initialized] Integrations")
     yield
 

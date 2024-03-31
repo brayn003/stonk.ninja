@@ -12,5 +12,6 @@ SESSION_SECRET: str = getenv("SESSION_SECRET")
 ADMIN_EMAIL: str = getenv("ADMIN_EMAIL")
 ADMIN_PASSWORD: str = getenv("ADMIN_PASSWORD")
 REDIS_URL: str = getenv("REDIS_URL")
+ENC_KEY: str = getenv("ENC_KEY")
 
 print("[Initialized] Environment Variables")

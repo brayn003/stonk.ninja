@@ -39,13 +39,17 @@ def get_integration(integration_type: IntegrationType):
 
 
 @router.patch("/integrations/{integration_type}", response_model=PatchIntegrationResponse)
-def patch_integration(integration_type: IntegrationType, body: PatchIntegrationBody):
+async def patch_integration(integration_type: IntegrationType, body: PatchIntegrationBody):
     integration = None
     if integration_type == "kite":
         kite_configuration = Configuration(
             integration_type=integration_type,
             api_key=body.configuration.api_key,
             api_secret=body.configuration.api_secret,
+            is_autosession_enabled=body.configuration.is_autosession_enabled,
+            username=body.configuration.username,
+            password=body.configuration.password,
+            totp_secret=body.configuration.totp_secret,
         )
         kite_integration = Integration(type="kite", configuration=kite_configuration)
         integration = IntegrationManager.set_integration(integration_type, kite_integration)
@@ -53,9 +57,16 @@ def patch_integration(integration_type: IntegrationType, body: PatchIntegrationB
     if not integration:
         raise HTTPException(status_code=400, detail="Not a valid integration type")
 
-    IntegrationManager.load_integration(integration)
-
     return {"integration": integration}
+
+
+@router.patch("/integrations/{integration_type}/sessions/default", responses={204: {"model": None}})
+async def load_integration_session(integration_type: IntegrationType):
+    integration = IntegrationManager.get_integration(integration_type)
+    if not integration:
+        raise HTTPException(status_code=404, detail="Integration not found")
+    await IntegrationManager.load_session(integration, "default")
+    return Response(status_code=204)
 
 
 @router.get("/integrations/{integration_type}/callback", responses={204: {"model": None}})
