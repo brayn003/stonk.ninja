@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/brayn003/stonk.ninja/compare/v0.2.0...v0.2.1) (2024-03-31)
+
+
+### Bug Fixes
+
+* adding fix for no session in integration route ([#25](https://github.com/brayn003/stonk.ninja/issues/25)) ([a564dea](https://github.com/brayn003/stonk.ninja/commit/a564dea50288ed97a348844e12ef50f1876643e3))
+
 ## [0.2.0](https://github.com/brayn003/stonk.ninja/compare/v0.1.11...v0.2.0) (2024-03-31)
 
 
