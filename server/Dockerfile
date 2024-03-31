@@ -19,6 +19,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 COPY --from=deps /app/app app
 COPY --from=deps /app/.venv .venv
 COPY .env.example .env
+RUN playwright install chromium
 
 ENV UVICORN_PORT=8000 \
     UVICORN_HOST=0.0.0.0

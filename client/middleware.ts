@@ -1,16 +1,30 @@
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const session = request.cookies.get("session")?.value;
-  console.log("middleware in", request.url);
-
-  if (!session && request.nextUrl.pathname.startsWith("/private")) {
-    return Response.redirect(new URL("/", request.url));
+export async function middleware(request: NextRequest) {
+  const reqCookie = request.headers.get("cookie");
+  // get session and cookie-value from server
+  let data, resCookie;
+  const reqHeaders = new Headers();
+  if (reqCookie) reqHeaders.set("cookie", reqCookie);
+  const res = await fetch(`${process.env.SERVER_PRIVATE_URL}/api/session`, { headers: reqHeaders });
+  if (res.ok) {
+    resCookie = res.headers.get("set-cookie");
+    data = await res.json();
   }
 
-  //   if (session && !request.nextUrl.pathname.startsWith("/dashboard")) {
-  //     return Response.redirect(new URL("/dashboard", request.url));
-  //   }
+  // set cookie if session cookie is not present
+  const headers = new Headers();
+  if (resCookie) {
+    headers.set("set-cookie", resCookie);
+  }
+
+  //  if user does not exist in session and route is private then redirect to home
+  if (!data?.session?.user && request.nextUrl.pathname.startsWith("/private")) {
+    headers.set("location", "/");
+    return new Response(null, { status: 302, headers });
+  }
+  // else continue
+  return NextResponse.next({ headers });
 }
 
 export const config = {
