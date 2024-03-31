@@ -13,9 +13,7 @@ class Db:
         if not MONGODB_URI:
             raise MissingEnvException("MONGODB_URI not found in environment variables")
         if not MONGODB_DB_NAME:
-            raise MissingEnvException(
-                "MONGODB_DB_NAME not found in environment variables"
-            )
+            raise MissingEnvException("MONGODB_DB_NAME not found in environment variables")
 
         client = pymongo.MongoClient(MONGODB_URI, uuidRepresentation="standard")
         self._db: Database = client[MONGODB_DB_NAME]
@@ -49,13 +47,9 @@ class Db:
         user_count = self._db["users"].estimated_document_count()
         if user_count == 0:
             if not ADMIN_EMAIL:
-                raise MissingEnvException(
-                    "ADMIN_EMAIL not found in environment variables"
-                )
+                raise MissingEnvException("ADMIN_EMAIL not found in environment variables")
             if not ADMIN_PASSWORD:
-                raise MissingEnvException(
-                    "ADMIN_EMAIL not found in environment variables"
-                )
+                raise MissingEnvException("ADMIN_PASSWORD not found in environment variables")
             # not the most secure solution as env will be avaialbe after setup but it is quick
             user = User(
                 full_name="Admin",
@@ -63,7 +57,7 @@ class Db:
                 password=hash_password(ADMIN_PASSWORD),
                 is_admin=True,
             )
-            self._db["users"].insert_one(user.model_dump())
+            self._db["users"].insert_one(user.model_dump(include={"password"}))
 
         # binding collections
         self.sessions = self._db["sessions"]

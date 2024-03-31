@@ -57,6 +57,7 @@ jobs:
       client: ${{ steps.release.outputs.client--release_created }}
       server: ${{ steps.release.outputs.server--release_created }}
       tick-workers: ${{ steps.release.outputs.tick-workers--release_created }}
+      root: ${{ steps.release.outputs.release_created }}
     steps:
       - uses: google-github-actions/release-please-action@v4
         id: release
@@ -83,6 +84,7 @@ jobs:
     needs: [push-server, push-client, push-tick-workers]
     if: |
       always() &&
+      needs.release-please.outputs.root &&
       !contains(needs.*.result, 'failure') &&
       !contains(needs.*.result, 'cancelled')
     uses: brayn003/stonk.ninja/.github/workflows/deploy.yaml@main
