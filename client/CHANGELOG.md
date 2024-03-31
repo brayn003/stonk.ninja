@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/brayn003/stonk.ninja/compare/client/v0.1.11...client/v0.2.0) (2024-03-31)
+
+
+### Features
+
+* new auth system and automated kite sessions ([#23](https://github.com/brayn003/stonk.ninja/issues/23)) ([61cb734](https://github.com/brayn003/stonk.ninja/commit/61cb734009c68f6394eb977616e281797336b1fe))
+
 ## [0.1.11](https://github.com/brayn003/stonk.ninja/compare/client/v0.1.10...client/v0.1.11) (2024-03-25)
 
 
