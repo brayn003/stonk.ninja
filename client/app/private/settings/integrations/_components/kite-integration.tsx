@@ -1,11 +1,11 @@
 "use client";
 
-import { CheckCircle2Icon, CheckCircleIcon, CheckIcon, Loader2Icon } from "lucide-react";
+import { CheckIcon, Loader2Icon } from "lucide-react";
 import { useMemo } from "react";
 import useSWRImmutable from "swr/immutable";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,

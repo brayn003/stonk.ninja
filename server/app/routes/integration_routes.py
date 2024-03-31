@@ -1,9 +1,9 @@
 from typing import List
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from pydantic import BaseModel
 
-from app.models.integration import Integration, IntegrationManager, IntegrationType
+from app.models.integration import Configuration, Integration, IntegrationManager, IntegrationType
 
 router = APIRouter(prefix="/api")
 
@@ -16,7 +16,11 @@ class GetIntegrationResponse(BaseModel):
     integration: Integration
 
 
-class UpdateIntegrationResponse(BaseModel):
+class PatchIntegrationBody(BaseModel):
+    configuration: Configuration
+
+
+class PatchIntegrationResponse(BaseModel):
     integration: Integration
 
 
@@ -34,7 +38,26 @@ def get_integration(integration_type: IntegrationType):
     return {"integration": integration}
 
 
-@router.patch("/integrations/{integration_type}", response_model=UpdateIntegrationResponse)
-def create_integration(integration_type: IntegrationType, body: Integration):
-    integration = IntegrationManager.set_integration(integration_type, body)
+@router.patch("/integrations/{integration_type}", response_model=PatchIntegrationResponse)
+def patch_integration(integration_type: IntegrationType, body: PatchIntegrationBody):
+    integration = None
+    if integration_type == "kite":
+        kite_configuration = Configuration(
+            integration_type=integration_type,
+            api_key=body.configuration.api_key,
+            api_secret=body.configuration.api_secret,
+        )
+        kite_integration = Integration(type="kite", configuration=kite_configuration)
+        integration = IntegrationManager.set_integration(integration_type, kite_integration)
+
+    if not integration:
+        raise HTTPException(status_code=400, detail="Not a valid integration type")
+
+    IntegrationManager.load_integration(integration)
+
     return {"integration": integration}
+
+
+@router.get("/integrations/{integration_type}/callback", responses={204: {"model": None}})
+def integration_callback():
+    return Response(status_code=204)
