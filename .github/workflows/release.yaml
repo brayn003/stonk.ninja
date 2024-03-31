@@ -81,5 +81,9 @@ jobs:
 
   deploy:
     needs: [push-server, push-client, push-tick-workers]
+    if: |
+      always() &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled')
     uses: brayn003/stonk.ninja/.github/workflows/deploy.yaml@main
     secrets: inherit
