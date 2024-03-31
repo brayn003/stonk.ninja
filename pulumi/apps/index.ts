@@ -3,12 +3,23 @@ import * as pulumi from "@pulumi/pulumi";
 
 const config = new pulumi.Config();
 
+// resources
 const mongodbUri = config.requireSecret("mongodb_uri").apply((s) => Buffer.from(s).toString("base64"));
-const kiteApiKey = config.requireSecret("kite_api_key").apply((s) => Buffer.from(s).toString("base64"));
-const kiteApiSecret = config.requireSecret("kite_api_secret").apply((s) => Buffer.from(s).toString("base64"));
-const sessionSecret = config.requireSecret("session_secret").apply((s) => Buffer.from(s).toString("base64"));
 const kafkaUri = config.requireSecret("kafka_uri").apply((s) => Buffer.from(s).toString("base64"));
+const redisUri = config.requireSecret("redis_uri").apply((s) => Buffer.from(s).toString("base64"));
 
+// session
+const sessionSecret = config.requireSecret("session_secret").apply((s) => Buffer.from(s).toString("base64"));
+const authToken = config.requireSecret("auth_token").apply((s) => Buffer.from(s).toString("base64"));
+
+// encryption
+const encKey = config.requireSecret("enc_key").apply((s) => Buffer.from(s).toString("base64"));
+
+// admin
+const adminEmail = config.requireSecret("admin_email").apply((s) => Buffer.from(s).toString("base64"));
+const adminPassword = config.requireSecret("admin_password").apply((s) => Buffer.from(s).toString("base64"));
+
+// runtime versions
 const versionClient = config.get("version_client") ?? "latest";
 const versionServer = config.get("version_server") ?? "latest";
 const versionTickWorkers = config.get("version_tick_workers") ?? "latest";
@@ -33,10 +44,13 @@ const stonkNinjaSecrets = new k8s.core.v1.Secret(
     type: "Opaque",
     data: {
       mongodbUri,
-      kiteApiKey,
-      kiteApiSecret,
       sessionSecret,
       kafkaUri,
+      redisUri,
+      authToken,
+      encKey,
+      adminEmail,
+      adminPassword,
     },
   },
   {
@@ -85,29 +99,56 @@ const stonkNinjaServer = new k8s.apps.v1.Deployment(
                   },
                 },
                 {
-                  name: "KITE_API_KEY",
-                  valueFrom: {
-                    secretKeyRef: {
-                      name: "stonk-ninja-secrets",
-                      key: "kiteApiKey",
-                    },
-                  },
-                },
-                {
-                  name: "KITE_API_SECRET",
-                  valueFrom: {
-                    secretKeyRef: {
-                      name: "stonk-ninja-secrets",
-                      key: "kiteApiSecret",
-                    },
-                  },
-                },
-                {
                   name: "SESSION_SECRET",
                   valueFrom: {
                     secretKeyRef: {
                       name: "stonk-ninja-secrets",
                       key: "sessionSecret",
+                    },
+                  },
+                },
+                {
+                  name: "REDIS_URI",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "redisUri",
+                    },
+                  },
+                },
+                {
+                  name: "AUTH_TOKEN",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "authToken",
+                    },
+                  },
+                },
+                {
+                  name: "ENC_KEY",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "encKey",
+                    },
+                  },
+                },
+                {
+                  name: "ADMIN_EMAIL",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "adminEmail",
+                    },
+                  },
+                },
+                {
+                  name: "ADMIN_PASSWORD",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "adminPassword",
                     },
                   },
                 },
@@ -326,6 +367,19 @@ const stonkNinjaTickProducer = new k8s.apps.v1.Deployment(
                     },
                   },
                 },
+                {
+                  name: "AUTH_TOKEN",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "authToken",
+                    },
+                  },
+                },
+                {
+                  name: "SERVER_PRIVATE_URL",
+                  value: "http://stonk-ninja-server-service.stonk-ninja.svc.cluster.local",
+                },
               ],
               resources: {
                 requests: { memory: "100Mi", cpu: "100m" },
@@ -391,6 +445,19 @@ const stonkNinjaTickRecorder = new k8s.apps.v1.Deployment(
                       key: "kafkaUri",
                     },
                   },
+                },
+                {
+                  name: "AUTH_TOKEN",
+                  valueFrom: {
+                    secretKeyRef: {
+                      name: "stonk-ninja-secrets",
+                      key: "authToken",
+                    },
+                  },
+                },
+                {
+                  name: "SERVER_PRIVATE_URL",
+                  value: "http://stonk-ninja-server-service.stonk-ninja.svc.cluster.local",
                 },
               ],
               resources: {
