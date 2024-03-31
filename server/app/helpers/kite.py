@@ -57,44 +57,55 @@ class KiteSession(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-async def _automated_login(integration: KiteIntegration):
-    login_url = "https://kite.zerodha.com/connect/login?v=3"
-    login_url += f"&api_key={integration.configuration.api_key}"
-    redirect_url = None
+class KiteSessionManager:
+    @staticmethod
+    async def _automated_login(integration: KiteIntegration):
+        login_url = "https://kite.zerodha.com/connect/login?v=3"
+        login_url += f"&api_key={integration.configuration.api_key}"
+        redirect_url = None
 
-    async def _request_handler(request):
-        if "/api/integrations/kite/callback" in request.url:
-            nonlocal redirect_url
-            redirect_url = request.url
+        async def _request_handler(request):
+            if "/api/integrations/kite/callback" in request.url:
+                nonlocal redirect_url
+                redirect_url = request.url
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        page.on("request", _request_handler)
-        await page.goto(login_url)
-        await page.locator("input#userid").fill(integration.configuration.username)
-        await page.locator("input#password").fill(integration.configuration.password)
-        await page.locator("button[type='submit']").click()
-        totp = pyotp.TOTP(integration.configuration.totp_secret)
-        otp = totp.now()
-        await expect(page.locator("form.twofa-form input#userid")).to_be_visible()
-        await expect(page.locator("form.twofa-form button[type='submit']")).to_be_visible()
-        await page.locator("form.twofa-form input#userid").fill(otp)
-        await page.wait_for_url("**/api/integrations/kite/callback*")
-        await browser.close()
-    return redirect_url
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            page = await browser.new_page()
+            page.on("request", _request_handler)
+            await page.goto(login_url)
+            await page.locator("input#userid").fill(integration.configuration.username)
+            await page.locator("input#password").fill(integration.configuration.password)
+            await page.locator("button[type='submit']").click()
+            totp = pyotp.TOTP(integration.configuration.totp_secret)
+            otp = totp.now()
+            await expect(page.locator("form.twofa-form input#userid")).to_be_visible()
+            await expect(page.locator("form.twofa-form button[type='submit']")).to_be_visible()
+            await page.locator("form.twofa-form input#userid").fill(otp)
+            await page.wait_for_url("**/api/integrations/kite/callback*")
+            await browser.close()
+        return redirect_url
 
+    @staticmethod
+    async def load_session(integration: KiteIntegration, session_name: str = "default"):
+        cache_key = f"integration:{integration.id}:session:{session_name}"
+        kite_session = cache.get(cache_key)
+        api_key = integration.configuration.api_key
+        api_secret = integration.configuration.api_secret
+        if not kite_session:
+            redirect_url = await KiteSessionManager._automated_login(integration)
+            queries = parse_qs(redirect_url)
+            request_token = queries["request_token"][0]
+            kite = KiteConnect(api_key=api_key)
+            kite_session_dict = kite.generate_session(request_token, api_secret=api_secret)
+            integration_session = KiteSession(data=kite_session_dict)
+            cache.set(cache_key, integration_session.model_dump_json())
 
-async def load_kiteconnect_session(integration: KiteIntegration, session_name: str = "default"):
-    cache_key = f"integration:{integration.id}:session:{session_name}"
-    kite_session = cache.get(cache_key)
-    api_key = integration.configuration.api_key
-    api_secret = integration.configuration.api_secret
-    if not kite_session:
-        redirect_url = await _automated_login(integration)
-        queries = parse_qs(redirect_url)
-        request_token = queries["request_token"][0]
-        kite = KiteConnect(api_key=api_key)
-        kite_session_dict = kite.generate_session(request_token, api_secret=api_secret)
-        integration_session = KiteSession(data=kite_session_dict)
-        cache.set(cache_key, integration_session.model_dump_json())
+    @staticmethod
+    async def get_session(integration: KiteIntegration, session_name: str = "default"):
+        cache_key = f"integration:{integration.id}:session:{session_name}"
+        kite_session_json = cache.get(cache_key)
+        if not kite_session_json:
+            return None
+        kite_session = KiteSession.model_validate_json(kite_session_json)
+        return kite_session

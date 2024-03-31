@@ -3,7 +3,13 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Response
 from pydantic import BaseModel
 
-from app.models.integration import Configuration, Integration, IntegrationManager, IntegrationType
+from app.models.integration import (
+    Configuration,
+    Integration,
+    IntegrationManager,
+    IntegrationSessionManager,
+    IntegrationType,
+)
 
 router = APIRouter(prefix="/api")
 
@@ -60,13 +66,20 @@ async def patch_integration(integration_type: IntegrationType, body: PatchIntegr
     return {"integration": integration}
 
 
-@router.patch("/integrations/{integration_type}/sessions/default", responses={204: {"model": None}})
+@router.put("/integrations/{integration_type}/sessions/default", responses={204: {"model": None}})
 async def load_integration_session(integration_type: IntegrationType):
     integration = IntegrationManager.get_integration(integration_type)
     if not integration:
         raise HTTPException(status_code=404, detail="Integration not found")
-    await IntegrationManager.load_session(integration, "default")
+    await IntegrationSessionManager.load_session(integration, "default")
     return Response(status_code=204)
+
+
+@router.get("/integrations/{integration_type}/sessions/default", responses={204: {"model": None}})
+async def get_integration_session(integration_type: IntegrationType):
+    integration = IntegrationManager.get_integration(integration_type)
+    integration_session = await IntegrationSessionManager.get_session(integration, "default")
+    return {"integration_session": integration_session}
 
 
 @router.get("/integrations/{integration_type}/callback", responses={204: {"model": None}})

@@ -5,7 +5,11 @@ from typing import Annotated, List, Literal, Union
 from cryptography.fernet import Fernet
 from pydantic import Field, TypeAdapter
 
-from app.helpers.kite import KiteConfiguration, KiteIntegration, load_kiteconnect_session
+from app.helpers.kite import (
+    KiteConfiguration,
+    KiteIntegration,
+    KiteSessionManager,
+)
 from app.services.db import db
 from app.services.env import ENC_KEY
 
@@ -16,7 +20,8 @@ Configuration = Annotated[Union[KiteConfiguration], Field(discriminator="integra
 Integration = Annotated[Union[KiteIntegration], Field(discriminator="type")]
 
 
-class IntegrationManager:
+class _IntegrationSecurity:
+    # integration encryption management
     @staticmethod
     def encrypt_configuration(configuration: Configuration):
         fernet = Fernet(ENC_KEY)
@@ -31,10 +36,12 @@ class IntegrationManager:
         configuration = TypeAdapter(Configuration).validate_json(configuration_json)
         return configuration
 
+
+class IntegrationManager:
     @staticmethod
     def set_integration(integration_type: IntegrationType, integration: Integration):
         integration_dict = integration.model_dump(exclude={"configuration"})
-        configuration_enc = IntegrationManager.encrypt_configuration(integration.configuration)
+        configuration_enc = _IntegrationSecurity.encrypt_configuration(integration.configuration)
         integration_dict["configuration"] = configuration_enc
         db.integrations.update_one(
             {"type": integration_type},
@@ -49,7 +56,9 @@ class IntegrationManager:
         integration_dict = db.integrations.find_one({"type": integration_type})
         if not integration_dict:
             return None
-        configuration = IntegrationManager.decrypt_configuration(integration_dict["configuration"])
+        configuration = _IntegrationSecurity.decrypt_configuration(
+            integration_dict["configuration"]
+        )
         integration_dict["configuration"] = configuration
         return TypeAdapter(Integration).validate_python(integration_dict)
 
@@ -57,7 +66,7 @@ class IntegrationManager:
     def list_integrations():
         integrations_dict = db.integrations.find({})
         for integration_dict in integrations_dict:
-            configuration = IntegrationManager.decrypt_configuration(
+            configuration = _IntegrationSecurity.decrypt_configuration(
                 integration_dict["configuration"]
             )
             integration_dict["configuration"] = configuration
@@ -68,14 +77,22 @@ class IntegrationManager:
         db.integrations.delete_one({"type": integration_type})
         return True
 
+
+# integration session management
+class IntegrationSessionManager:
+    @staticmethod
+    async def get_session(integration: Integration, session_name: str = "default"):
+        if integration.type == "kite":
+            return await KiteSessionManager.get_session(integration, session_name=session_name)
+
     @staticmethod
     async def load_session(integration: Integration, session_name: str = "default"):
         if integration.type == "kite":
-            await load_kiteconnect_session(integration, session_name=session_name)
+            await KiteSessionManager.load_session(integration, session_name=session_name)
 
     @staticmethod
     async def load_all_sessions():
         integrations = IntegrationManager.list_integrations()
         for integration in integrations:
             if integration.type == "kite":
-                await IntegrationManager.load_session(integration, session_name="default")
+                await IntegrationSessionManager.load_session(integration, session_name="default")

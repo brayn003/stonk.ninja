@@ -1,30 +1,25 @@
 import { KiteTicker } from "kiteconnect";
 
 import { Broadcast } from "../services/broadcast";
-import { db } from "../services/db";
 import { WatchedInstruments } from "../services/instruments";
+import { initialiseKiteSession } from "../services/kite-session";
 import type { Tick } from "../types";
-
-interface SessionDoc {
-  sess_id: string;
-  type: "app/kite";
-  data: {
-    api_key: string;
-    access_token: string;
-  };
-}
 
 class KiteTickerProducer {
   ticker?: KiteTicker;
   broadcast?: Broadcast;
   batchId: number = 0;
+  isReconnecting: boolean = false;
 
   async initialize() {
-    const sessionDoc = await db.collection<SessionDoc>("sessions").findOne({ is_active: true }, { sort: { _id: -1 } });
-    if (!sessionDoc) throw new Error("No active session found");
+    const kiteSession = await initialiseKiteSession();
+    if (!kiteSession || !kiteSession?.is_active) {
+      throw new Error("No active session found");
+    }
+    console.log(`[Connected] KITE`);
     this.ticker = new KiteTicker({
-      api_key: sessionDoc.data.api_key,
-      access_token: sessionDoc.data.access_token,
+      api_key: kiteSession.data.api_key,
+      access_token: kiteSession.data.access_token,
       // does not obey the max_retry and max_delay options
       reconnect: true,
       max_retry: 5,
@@ -64,6 +59,11 @@ class KiteTickerProducer {
   async #onClose(ws: { code: number; reason: string }) {
     if (!this.ticker) throw new Error("Ticker not initialized");
     this.ticker.disconnect();
+    if (!this.isReconnecting) {
+      this.isReconnecting = true;
+      await initialiseKiteSession();
+      this.isReconnecting = false;
+    }
     console.log(`[Closed] CODE: ${ws?.code} REASON: ${ws?.reason}`);
   }
 
