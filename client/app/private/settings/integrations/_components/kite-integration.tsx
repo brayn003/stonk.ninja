@@ -44,7 +44,7 @@ export function KiteIntegration() {
 
   async function loadSession() {
     setIsLoadSessionLoading(true);
-    const res = await fetch("/api/integrations/kite/sessions/default", { method: "PATCH" });
+    const res = await fetch("/api/integrations/kite/sessions/default", { method: "PUT" });
     setIsLoadSessionLoading(false);
     if (res.ok) {
       toast({ description: "Kite Connect session started" });
