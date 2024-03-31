@@ -5,7 +5,7 @@ from app.errors import (
     InvalidEmailException,
 )
 from app.helpers.auth import compare_passwords, hash_password
-from app.helpers.models import User
+from app.helpers.models import User, UserInDB
 from app.helpers.session import Session, SessionManager
 from app.helpers.validators import is_valid_email, is_valid_password
 from app.services.db import db
@@ -43,7 +43,7 @@ async def signup(body: SignupBody):
     exists = bool(existing_user)
     if exists:
         raise HTTPException(status_code=409, detail="User already exists")
-    user_body = User(
+    user_body = UserInDB(
         full_name=body.full_name,
         email=body.email,
         password=hash_password(body.password),
@@ -51,7 +51,6 @@ async def signup(body: SignupBody):
     res = db.users.insert_one(user_body.model_dump())
     user = db.users.find_one({"_id": res.inserted_id})
     user = User.model_validate(user)
-    del user.password
     return {"user": user}
 
 
@@ -62,13 +61,13 @@ async def login(request: Request, body: LoginBody):
     user = db.users.find_one({"email": body.email})
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    user = User.model_validate(user)
+    user = UserInDB.model_validate(user)
     match = compare_passwords(body.password, user.password)
     if not match:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     # create session
     session_id = request.session["session_id"]
     session = SessionManager.get_session(session_id)
-    session.user = user
+    session.user = User.model_validate(user.model_dump())
     SessionManager.set_session(session.id, session)
     return {"session": session}

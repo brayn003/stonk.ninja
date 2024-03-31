@@ -4,7 +4,7 @@ from pymongo.database import Database
 
 from app.errors import MissingEnvException
 from app.helpers.auth import hash_password
-from app.helpers.models import User
+from app.helpers.models import UserInDB
 from app.services.env import ADMIN_EMAIL, ADMIN_PASSWORD, MONGODB_DB_NAME, MONGODB_URI
 
 
@@ -51,13 +51,13 @@ class Db:
             if not ADMIN_PASSWORD:
                 raise MissingEnvException("ADMIN_PASSWORD not found in environment variables")
             # not the most secure solution as env will be avaialbe after setup but it is quick
-            user = User(
+            user = UserInDB(
                 full_name="Admin",
                 email=ADMIN_EMAIL,
                 password=hash_password(ADMIN_PASSWORD),
                 is_admin=True,
             )
-            self._db["users"].insert_one(user.model_dump(include={"password"}))
+            self._db["users"].insert_one(user.model_dump())
 
         # binding collections
         self.sessions = self._db["sessions"]
