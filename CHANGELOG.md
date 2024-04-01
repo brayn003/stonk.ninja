@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.4](https://github.com/brayn003/stonk.ninja/compare/v0.2.3...v0.2.4) (2024-04-01)
+
+
+### Bug Fixes
+
+* adding playwright deps for running browser ([640ab27](https://github.com/brayn003/stonk.ninja/commit/640ab27d3ea19e5e9eae4a68dc671a21d4e239d4))
+* fixing client load patch to put ([5bd6d45](https://github.com/brayn003/stonk.ninja/commit/5bd6d45987c56f9ee1076a57b8a408b802381809))
+
 ## [0.2.3](https://github.com/brayn003/stonk.ninja/compare/v0.2.2...v0.2.3) (2024-03-31)
 
 
