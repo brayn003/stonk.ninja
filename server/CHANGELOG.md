@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/brayn003/stonk.ninja/compare/server/v0.2.4...server/v0.2.5) (2024-04-01)
+
+
+### Bug Fixes
+
+* removing integration loading from startup ([524236b](https://github.com/brayn003/stonk.ninja/commit/524236b83433862746520c7490e11b09f3ce0eae))
+
 ## [0.2.4](https://github.com/brayn003/stonk.ninja/compare/server/v0.2.3...server/v0.2.4) (2024-04-01)
 
 
