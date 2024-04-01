@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-export default function ErrorAlert() {
+export function ErrorAlert() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 

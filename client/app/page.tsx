@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-import ErrorAlert from "./_components/ErrorAlert";
-import UserLogin from "./_components/UserLogin";
+import { ErrorAlert } from "./_components/error-alert";
+import { UserLogin } from "./_components/user-login";
 
 export const metadata: Metadata = {
   // template is not supported in siblings

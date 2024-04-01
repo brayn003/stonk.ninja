@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/PageHeader";
+import { PageHeader } from "@/components/page-header";
 
 import { SettingsNav } from "./_components/settings-nav";
 
