@@ -2,10 +2,15 @@ import pymongo
 from pymongo.collection import Collection
 from pymongo.database import Database
 
-from app.errors import MissingEnvException
 from app.helpers.auth import hash_password
 from app.helpers.models import UserInDB
-from app.services.env import ADMIN_EMAIL, ADMIN_PASSWORD, MONGODB_DB_NAME, MONGODB_URI
+from app.services.env import (
+    ADMIN_EMAIL,
+    ADMIN_PASSWORD,
+    MONGODB_DB_NAME,
+    MONGODB_URI,
+    MissingEnvException,
+)
 
 
 class Db:

@@ -3,7 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.middlewares.auth_session import AuthSessionMiddleware
-from app.routes import auth, integration_routes, session_routes, ticks
+from app.routes import auth_routes, integration_routes, session_routes
 from app.services.env import SESSION_SECRET
 
 # @asynccontextmanager
@@ -30,9 +30,8 @@ app.add_middleware(
 app.add_middleware(AuthSessionMiddleware)
 app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
 
-app.include_router(auth.router)
+app.include_router(auth_routes.router)
 app.include_router(session_routes.router)
-app.include_router(ticks.router)
 app.include_router(integration_routes.router)
 
 

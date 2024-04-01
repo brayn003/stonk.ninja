@@ -13,4 +13,9 @@ ADMIN_PASSWORD: str = getenv("ADMIN_PASSWORD")
 REDIS_URI: str = getenv("REDIS_URI")
 ENC_KEY: str = getenv("ENC_KEY")
 
+
+class MissingEnvException(Exception):
+    pass
+
+
 print("[Initialized] Environment Variables")

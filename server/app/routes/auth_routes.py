@@ -1,9 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
-from app.errors import (
-    InvalidEmailException,
-)
 from app.helpers.auth import compare_passwords, hash_password
 from app.helpers.models import User, UserInDB
 from app.helpers.session import Session, SessionManager
@@ -57,7 +54,7 @@ async def signup(body: SignupBody):
 @router.post("/login", response_model=LoginResponse, response_model_by_alias=False)
 async def login(request: Request, body: LoginBody):
     if not is_valid_email(body.email):
-        raise InvalidEmailException("Email is invalid")
+        raise HTTPException(status_code=400, detail="Email is invalid")
     user = db.users.find_one({"email": body.email})
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
