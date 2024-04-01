@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/brayn003/stonk.ninja/compare/client/v0.2.0...client/v0.2.1) (2024-04-01)
+
+
+### Bug Fixes
+
+* fixing client load patch to put ([5bd6d45](https://github.com/brayn003/stonk.ninja/commit/5bd6d45987c56f9ee1076a57b8a408b802381809))
+
 ## [0.2.0](https://github.com/brayn003/stonk.ninja/compare/client/v0.1.11...client/v0.2.0) (2024-03-31)
 
 
