@@ -20,7 +20,7 @@ const loginFormSchema = z.object({
 
 interface UserLoginProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function UserLogin({ className, ...props }: UserLoginProps) {
+export function UserLogin({ className, ...props }: UserLoginProps) {
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
