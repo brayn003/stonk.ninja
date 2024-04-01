@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/brayn003/stonk.ninja/compare/client/v0.2.1...client/v0.2.2) (2024-04-01)
+
+
+### Bug Fixes
+
+* code cleanup ([#48](https://github.com/brayn003/stonk.ninja/issues/48)) ([ab1b825](https://github.com/brayn003/stonk.ninja/commit/ab1b825b1cf714f416d2a0181943f3f3595575f5))
+
 ## [0.2.1](https://github.com/brayn003/stonk.ninja/compare/client/v0.2.0...client/v0.2.1) (2024-04-01)
 
 

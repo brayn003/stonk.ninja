@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/brayn003/stonk.ninja/compare/tick-workers/v0.2.0...tick-workers/v0.2.1) (2024-04-01)
+
+
+### Bug Fixes
+
+* code cleanup ([#48](https://github.com/brayn003/stonk.ninja/issues/48)) ([ab1b825](https://github.com/brayn003/stonk.ninja/commit/ab1b825b1cf714f416d2a0181943f3f3595575f5))
+
 ## [0.2.0](https://github.com/brayn003/stonk.ninja/compare/tick-workers/v0.1.11...tick-workers/v0.2.0) (2024-03-31)
 
 
