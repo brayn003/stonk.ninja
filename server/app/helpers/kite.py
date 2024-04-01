@@ -89,17 +89,15 @@ class KiteSessionManager:
     @staticmethod
     async def load_session(integration: KiteIntegration, session_name: str = "default"):
         cache_key = f"integration:{integration.id}:session:{session_name}"
-        kite_session = cache.get(cache_key)
         api_key = integration.configuration.api_key
         api_secret = integration.configuration.api_secret
-        if not kite_session:
-            redirect_url = await KiteSessionManager._automated_login(integration)
-            queries = parse_qs(redirect_url)
-            request_token = queries["request_token"][0]
-            kite = KiteConnect(api_key=api_key)
-            kite_session_dict = kite.generate_session(request_token, api_secret=api_secret)
-            integration_session = KiteSession(data=kite_session_dict)
-            cache.set(cache_key, integration_session.model_dump_json())
+        redirect_url = await KiteSessionManager._automated_login(integration)
+        queries = parse_qs(redirect_url)
+        request_token = queries["request_token"][0]
+        kite = KiteConnect(api_key=api_key)
+        kite_session_dict = kite.generate_session(request_token, api_secret=api_secret)
+        integration_session = KiteSession(data=kite_session_dict)
+        cache.set(cache_key, integration_session.model_dump_json())
 
     @staticmethod
     async def get_session(integration: KiteIntegration, session_name: str = "default"):

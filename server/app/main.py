@@ -1,25 +1,24 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.middlewares.auth_session import AuthSessionMiddleware
-from app.models.integration import IntegrationSessionManager
 from app.routes import auth, integration_routes, session_routes, ticks
 from app.services.env import SESSION_SECRET
 
+# @asynccontextmanager
+# # pylint: disable=unused-argument
+# async def lifespan(fastapi_app: FastAPI):
+#     # pylint: enable=unused-argument
+#     await IntegrationSessionManager.load_all_sessions()
+#     print("[Initialized] Integrations")
+#     yield
 
-@asynccontextmanager
-# pylint: disable=unused-argument
-async def lifespan(fastapi_app: FastAPI):
-    # pylint: enable=unused-argument
-    await IntegrationSessionManager.load_all_sessions()
-    print("[Initialized] Integrations")
-    yield
 
-
-app = FastAPI(lifespan=lifespan, redirect_slashes=False)
+app = FastAPI(
+    # lifespan=lifespan,
+    redirect_slashes=False
+)
 
 app.add_middleware(
     CORSMiddleware,
