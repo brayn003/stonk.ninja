@@ -1,28 +1,31 @@
 from datetime import datetime
-from typing import List, Literal
+from typing import List, Literal, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, TypeAdapter
+
+from app.helpers.types import PyObjectId
+from app.services.db import db
 
 
-class TickDepthLevel(BaseModel):
+class KiteTickDepthLevel(BaseModel):
     quantity: int
     price: float
     orders: int
 
 
-class TickDepth(BaseModel):
-    buy: List[TickDepthLevel]
-    sell: List[TickDepthLevel]
+class KiteTickDepth(BaseModel):
+    buy: List[KiteTickDepthLevel]
+    sell: List[KiteTickDepthLevel]
 
 
-class TickOhlc(BaseModel):
+class KiteTickOhlc(BaseModel):
     open: float
     high: float
     low: float
     close: float
 
 
-class Tick(BaseModel):
+class KiteTick(BaseModel):
     tradable: bool
     mode: Literal["full", "ltp", "quote"]
     instrument_token: int
@@ -38,22 +41,26 @@ class Tick(BaseModel):
     oi_day_high: int
     oi_day_low: int
     exchange_timestamp: datetime
-    depth: TickDepth
+    depth: KiteTickDepth
 
 
-class TicksMessage(BaseModel):
-    vendor: Literal["kite"]
-    ticks: List[Tick]
-
-
-class TickDocMetadata(BaseModel):
+class TickMetadata(BaseModel):
     instrument_token: int
     tradingsymbol: str
 
 
-class TickDoc(BaseModel):
-    _id: str
+class Tick(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
     timestamp: datetime
-    metadata: TickDocMetadata
-    data: Tick
+    metadata: TickMetadata
+    data: KiteTick
     received_at: datetime
+
+
+class TickManager:
+    @staticmethod
+    def list_ticks(tradingsymbol: str, from_date: datetime = None, to_date: datetime = None):
+        ticks = db.ticks.find({"metadata.tradingsymbol": tradingsymbol}).limit(100)
+        ticks = TypeAdapter(List[Tick]).validate_python(ticks)
+
+        return ticks

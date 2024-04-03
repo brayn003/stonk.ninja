@@ -1,16 +1,15 @@
 from datetime import datetime, timezone
-from typing import Annotated, Dict, List, Literal, Optional
+from typing import Dict, List, Literal, Optional
 from urllib.parse import parse_qs
 from uuid import uuid4
 
 import pyotp
 from kiteconnect import KiteConnect
 from playwright.async_api import async_playwright, expect
-from pydantic import BaseModel, BeforeValidator, EmailStr, Field, HttpUrl
+from pydantic import BaseModel, EmailStr, Field, HttpUrl
 
+from app.helpers.types import PyObjectId
 from app.services.cache import cache
-
-PyObjectId = Annotated[str, BeforeValidator(str)]
 
 
 class KiteConfiguration(BaseModel):
