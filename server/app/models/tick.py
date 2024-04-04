@@ -35,6 +35,7 @@ class KiteTick(BaseModel):
     volume_traded: int
     total_buy_quantity: int
     total_sell_quantity: int
+    ohlc: KiteTickOhlc
     change: float
     last_trade_time: datetime
     oi: int
@@ -60,7 +61,16 @@ class Tick(BaseModel):
 class TickManager:
     @staticmethod
     def list_ticks(tradingsymbol: str, from_date: datetime = None, to_date: datetime = None):
-        ticks = db.ticks.find({"metadata.tradingsymbol": tradingsymbol}).limit(100)
+        ticks = (
+            db.ticks.find(
+                {
+                    "received_at": {"$gte": datetime(2021, 1, 1)},
+                    "metadata.tradingsymbol": tradingsymbol,
+                }
+            )
+            .sort("received_at", 1)
+            .limit(5000)
+        )
         ticks = TypeAdapter(List[Tick]).validate_python(ticks)
 
         return ticks
